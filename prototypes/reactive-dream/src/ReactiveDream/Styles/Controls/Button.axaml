@@ -1,0 +1,139 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctl="using:ReactiveDream.Controls">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel Spacing="20">
+                <Button Content="Click Me!" />
+                <Button Classes="accent" Content="Click Me!" />
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type Button}"
+                TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource Button.Idle.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource Button.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Button.Idle.OuterBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border x:Name="Outer"
+                            Margin="1"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                        <Border x:Name="Inner"
+                            Background="{DynamicResource Button.TopShine}"
+                            BorderBrush="{DynamicResource Button.InnerBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={x:Static ctl:CornerRadiusAdjustConverter.Instance}, ConverterParameter={StaticResource CornerRadiusMinus1}}">
+                            <Rectangle Fill="{DynamicResource Button.BottomShine}"
+                                    RenderTransformOrigin="50%,100%"
+                                    RenderTransform="scale(1,0.75)" />
+                        </Border>
+                    </Border>
+                    <Panel Margin="3">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        CornerRadius="0"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        Padding="{TemplateBinding Padding}"
+                                        RecognizesAccessKey="True"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Panel>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ Border#Outer">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="{StaticResource Button.FadeDuration}" />
+                    <BrushTransition Property="BorderBrush" Duration="{StaticResource Button.FadeDuration}" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="^ /template/ Border#Inner">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="{StaticResource Button.FadeDuration}" />
+                </Transitions>
+            </Setter>
+        </Style>
+        
+        <Style Selector="^:pointerover">
+            <Style Selector="^ /template/ Border#Outer">
+                <Setter Property="BorderBrush" Value="{DynamicResource Button.Hover.OuterBorderBrush}" />
+            </Style>
+            <Style Selector="^:not(:pressed) /template/ Border#Outer">
+                <Setter Property="Background" Value="{DynamicResource Button.Hover.Background}" />
+                <Setter Property="BoxShadow" Value="0 0 1 #E000BDE6" />
+                <!--
+                <Setter Property="BoxShadow" Value="0 0 4 #BDE6A000" />
+                -->
+            </Style>
+        </Style>
+
+        <Style Selector="^:pressed">
+            <Style Selector="^ /template/ Border#Outer">
+                <Setter Property="Background" Value="{DynamicResource Button.Pressed.Background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Button.Idle.OuterBorderBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource Button.Disabled.Foreground}" />
+            <Style Selector="^ /template/ Border#Outer">
+                <Setter Property="Background" Value="{DynamicResource Button.Disabled.Background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Button.Disabled.OuterBorderBrush}" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource Button.Disabled.Foreground}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:pressed,^:disabled">
+            <Style Selector="^ /template/ Border#Inner">
+                <Setter Property="Opacity" Value="0" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+
+    <ControlTheme x:Key="{x:Type RepeatButton}"
+                TargetType="Button"
+                BasedOn="{StaticResource {x:Type Button}}" />
+
+
+    <ControlTheme x:Key="{x:Type ToggleButton}"
+                TargetType="Button"
+                BasedOn="{StaticResource {x:Type Button}}">
+        <Style Selector="^:checked">
+            <Style Selector="^ /template/ Border#Outer">
+                <Setter Property="Background" Value="{DynamicResource Button.Pressed.Background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Button.Idle.OuterBorderBrush}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:checked">
+            <Style Selector="^ /template/ Border#Inner">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

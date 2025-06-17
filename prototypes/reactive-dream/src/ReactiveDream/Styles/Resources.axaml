@@ -1,0 +1,154 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <FontFamily x:Key="ContentControlThemeFontFamily">Ubuntu</FontFamily>
+    <x:Double x:Key="ControlContentThemeFontSize">11</x:Double>
+
+
+    <CornerRadius x:Key="CornerRadiusMinus1">-1</CornerRadius>
+    
+    
+    <Color x:Key="Theme.Color">#4C46A9D5</Color>
+    <SolidColorBrush x:Key="Theme.Color.Brush" Color="{DynamicResource Theme.Color}" />
+    <ExperimentalAcrylicMaterial x:Key="Theme.Color.AcrylicMaterial"
+                                TintColor="{DynamicResource Theme.Color}"
+                                TintOpacity="1"
+                                MaterialOpacity="0.06"
+                                    />
+    <!--
+                                BackgroundSource="Digger"
+                                0.29803921568627450980392156862745
+    -->
+    <x:TimeSpan x:Key="Button.FadeDuration">0:0:0.0875</x:TimeSpan>
+    <LinearGradientBrush x:Key="Button.Idle.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#FFCBD3D6" />
+        <GradientStop Offset="1" Color="#FFD8DFE1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Button.Hover.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#FFB2CFD7" />
+        <GradientStop Offset="1" Color="#FFB9D8E0" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Button.Pressed.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#FFA6B4BA" />
+        <GradientStop Offset="1" Color="#FFAEBCC1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Button.Disabled.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#FFAFAFAF" />
+        <GradientStop Offset="1" Color="#FFB7B7B7" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="Button.Idle.OuterBorderBrush">#FF687B80</SolidColorBrush>
+    <SolidColorBrush x:Key="Button.Hover.OuterBorderBrush">#FF808F93</SolidColorBrush>
+    <SolidColorBrush x:Key="Button.Disabled.OuterBorderBrush">#FF747474</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="Button.InnerBorderBrush"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#A0FFFFFF" />
+        <GradientStop Offset="1" Color="#20FFFFFF" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Button.TopShine"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#A0FFFFFF" />
+        <GradientStop Offset="0.25" Color="#6AFFFFFF" />
+        <GradientStop Offset="0.25" Color="#00FFFFFF" />
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="Button.BottomShine"
+                        Center="50%,50%"
+                        GradientOrigin="50%,50%">
+        <GradientStop Offset="0.25" Color="#80FFFFFF" />
+        <GradientStop Offset="1" Color="#00FFFFFF" />
+    </RadialGradientBrush>
+    <SolidColorBrush x:Key="Button.Foreground">#FF000000</SolidColorBrush>
+    <SolidColorBrush x:Key="Button.Disabled.Foreground">#FF606060</SolidColorBrush>
+
+
+
+
+    <SolidColorBrush x:Key="Window.Border.Exterior.OuterBorderBrush">#FF000000</SolidColorBrush>
+    <SolidColorBrush x:Key="Window.Border.Exterior.InnerBorderBrush">#B2FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="Window.Border.OpaqueBrush">#FFA6B8C2</SolidColorBrush>
+    <LinearGradientBrush x:Key="Window.Border.BackgroundBrush"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#40FFFFFF" />
+        <GradientStop Offset="0.75" Color="#10FFFFFF" />
+        <GradientStop Offset="1" Color="#20FFFFFF" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Window.Border.SideShine.BackgroundBrush"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#00FFFFFF" />
+        <GradientStop Offset="1" Color="#38FFFFFF" />
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="Window.Border.TopShine.BackgroundBrush"
+                        Center="50%,0%"
+                        GradientOrigin="50%,0%">
+        <GradientStop Offset="0" Color="#40FFFFFF" />
+        <GradientStop Offset="1" Color="#00FFFFFF" />
+    </RadialGradientBrush>
+    <SolidColorBrush x:Key="Window.Border.Interior.OuterBorderBrush">#60FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="Window.Border.Interior.InnerBorderBrush">#66000000</SolidColorBrush>
+
+
+    <RadialGradientBrush x:Key="Window.CaptionButton.Idle.BackgroundBrush"
+                        Center="50%,50%"
+                        GradientOrigin="50%,50%">
+        <GradientStop Offset="0" Color="#00FFFFFF" />
+        <GradientStop Offset="1" Color="#20FFFFFF" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="Window.CaptionButton.Hover.BackgroundBrush"
+                        Center="50%,100%"
+                        GradientOrigin="50%,100%">
+        <GradientStop Offset="0" Color="#FF80FFFF" />
+        <GradientStop Offset="1" Color="#FF008080" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="Window.CaptionButton.Pressed.BackgroundBrush"
+                        Center="50%,100%"
+                        GradientOrigin="50%,100%">
+        <GradientStop Offset="0" Color="#FF40C0C0" />
+        <GradientStop Offset="1" Color="#FF004040" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="Window.CloseButton.Hover.BackgroundBrush"
+                        Center="50%,100%"
+                        GradientOrigin="50%,100%">
+        <GradientStop Offset="0" Color="#FFFF8080" />
+        <GradientStop Offset="1" Color="#FF800000" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="Window.CloseButton.Pressed.BackgroundBrush"
+                        Center="50%,100%"
+                        GradientOrigin="50%,100%">
+        <GradientStop Offset="0" Color="#FFC04040" />
+        <GradientStop Offset="1" Color="#FF400000" />
+    </RadialGradientBrush>
+    <LinearGradientBrush x:Key="Window.CaptionButton.Shine.BackgroundBrush"
+                        StartPoint="0,0"
+                        EndPoint="0,6">
+        <GradientStop Offset="0" Color="#60FFFFFF" />
+        <GradientStop Offset="1" Color="#40FFFFFF" />
+        <GradientStop Offset="1" Color="#00FFFFFF" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Window.CaptionButton.Idle.Glyph.BorderBrush">#CC1D1D1B</SolidColorBrush>
+    <LinearGradientBrush x:Key="Window.CaptionButton.Idle.Glyph.BackgroundBrush"
+                        StartPoint="0,0"
+                        EndPoint="0,10">
+        <GradientStop Offset="0" Color="#FFFFFFFF" />
+        <GradientStop Offset="1" Color="#FFC2C2C2" />
+    </LinearGradientBrush>
+    <x:TimeSpan x:Key="Window.CaptionButton.FadeDuration">0:0:0.12</x:TimeSpan>
+    
+    
+    <x:TimeSpan x:Key="Window.OpenClose.TiltDuration">0:0:0.24</x:TimeSpan>
+    <x:TimeSpan x:Key="Window.MaximizeRestore.ScaleDuration">0:0:0.24</x:TimeSpan>
+    <CubicEaseOut x:Key="Window.OpenClose.Easing" />
+</ResourceDictionary>

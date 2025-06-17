@@ -1,0 +1,129 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctl="using:ReactiveDream.Controls">
+    <ControlTheme x:Key="{x:Type ctl:MWindow}"
+                TargetType="{x:Type ctl:MWindow}"
+                BasedOn="{StaticResource WindowBase}">
+        <Setter Property="BorderBrush" Value="{DynamicResource Theme.Color.Brush}" />
+        <Setter Property="RenderTransform" Value="scale(1)" />
+
+        
+        <Style Selector="^ /template/ :is(Decorator).blurBehind">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="^ /template/ Border.textGlow">
+            <Setter Property="IsVisible" Value="True" />
+            <Setter Property="Background" Value="#80FFFFFF" />
+            <Setter Property="BoxShadow" Value="0 0 12 6 #80FFFFFF" />
+        </Style>
+
+
+        <Style Selector="^[AnimationState=Hidden]">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Style Selector="^[AnimationState=Opening]">
+            <Style.Animations>
+                <Animation Duration="{StaticResource Window.OpenClose.TiltDuration}"
+                        Easing="{StaticResource Window.OpenClose.Easing}"
+                        FillMode="Forward">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0" />
+                        
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.64" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.64" />
+                        
+                        <Setter Property="TransformAngleX" Value="-8" />
+                        <Setter Property="TransformAngleY" Value="-1" />
+                        <Setter Property="TransformAngleZ" Value="-2" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1" />
+                        
+                        <Setter Property="ScaleTransform.ScaleX" Value="1" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+
+                        <Setter Property="TransformAngleX" Value="0" />
+                        <Setter Property="TransformAngleY" Value="0" />
+                        <Setter Property="TransformAngleZ" Value="0" />
+                        <!--
+                        <Setter Property="IsOpened" Value="True" />
+                        -->
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[AnimationState=Closing]">
+            <Style.Animations>
+                <Animation Duration="{StaticResource Window.OpenClose.TiltDuration}"
+                        Easing="{StaticResource Window.OpenClose.Easing}"
+                        FillMode="Both">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="ScaleTransform.ScaleX" Value="1" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="1" />
+
+                        <Setter Property="TransformAngleX" Value="0" />
+                        <Setter Property="TransformAngleY" Value="0" />
+                        <Setter Property="TransformAngleZ" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0" />
+                        
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.64" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.64" />
+                        
+                        <Setter Property="TransformAngleX" Value="10" />
+                        <Setter Property="TransformAngleY" Value="2" />
+                        <Setter Property="TransformAngleZ" Value="4" />
+                        <!--
+                        <Setter Property="IsOpened" Value="False" />
+                        -->
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+
+
+
+        <Style Selector="^[IsMaximized=False],
+                        ^[AnimationState=RestoringFromMaximize]">
+            <Style Selector="^ /template/ Border#FrameRoot">
+                <!--
+                <Setter Property="RenderOptions.EdgeMode" Value="Unspecified" />
+                -->
+                <Setter Property="BoxShadow" Value="2.8 4.8 6 #80000000" />
+            </Style>
+        </Style>
+        <Style Selector="^[AnimationState=RestoringFromMaximize]">
+            <Style.Animations>
+                <Animation Duration="{StaticResource Window.MaximizeRestore.ScaleDuration}"
+                        Easing="CircularEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="ScaleTransform.ScaleX" Value="1.24" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="1.24" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="ScaleTransform.ScaleX" Value="1.0" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="1.0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="^[AnimationState=Maximizing]">
+            <Style.Animations>
+                <Animation Duration="{StaticResource Window.MaximizeRestore.ScaleDuration}"
+                        Easing="CircularEaseOut">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.56" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.56" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="ScaleTransform.ScaleX" Value="1.0" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="1.0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

@@ -1,0 +1,156 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:v="using:ReactiveDream.Views"
+        xmlns:vm="using:ReactiveDream.ViewModels"
+        xmlns:ctl="using:ReactiveDream.Controls"
+        xmlns:local="using:ReactiveDream"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ReactiveDream.Views.MainView">
+    <UserControl.Resources>
+        <local:ViewLocator x:Key="WindowContentLocator" />
+    </UserControl.Resources>
+    <DockPanel>
+        <Panel.Background>
+            <ImageBrush Source="resm:wallpapers/reactive/wallpaper.png/1068x600"
+                        Stretch="UniformToFill" />
+            <!--
+                Source="avares://ReactiveDream/Assets/wallpaper.png"
+            -->
+        </Panel.Background>
+            <Panel x:Name="Taskbar"
+                    DockPanel.Dock="Bottom"
+                    ZIndex="99999999"
+                    Height="40">
+                    <ContentControl Theme="{DynamicResource Taskbar}">
+                        <ContentControl Content="Taskbar not yet interactive"
+                                        FontSize="16"
+                                        Padding="4"
+                                        Opacity="0.875"
+                                        Theme="{DynamicResource Placeholder}"
+                                        IsHitTestVisible="False"
+                                        IsTabStop="False"
+                                        Focusable="False"
+                                        IsVisible="{Binding $parent[ContentControl].IsPointerOver, Mode=OneWay}" />
+                        <!--
+                        <Border Background="#80000000"
+                                IsHitTestVisible="False"
+                                IsTabStop="False"
+                                Focusable="False"
+                                IsVisible="{Binding $parent[ContentControl].IsPointerOver, Mode=OneWay}">
+                            <TextBlock Foreground="#FFFFFFFF"
+                                    Text="Taskbar not yet interactive" />
+                        </Border>
+                        -->
+                </ContentControl>
+            </Panel>
+            <Panel>
+                <ItemsControl x:Name="Desktop"
+                            ItemsSource="{Binding DesktopIcons}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Styles>
+                        <!--
+                        <Style Selector="Button.desktop-icon:not(:pointerover):not(:pressed) /template/ Border">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                        -->
+                        <!--
+                        <Style Selector="Button.desktop-icon:not(:pointerover):not(:pressed)">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                        </Style>
+                        <Style Selector="Button.desktop-icon:not(:pointerover):not(:pressed) /template/ Border#Inner">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                        -->
+                        <Style Selector="Button.desktop-icon">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Foreground" Value="#FFFFFFFF" />
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                        </Style>
+                        <Style Selector="Button.desktop-icon /template/ Border#Outer">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Style>
+                        <Style Selector="Button.desktop-icon:not(:pointerover,:focus) /template/ Border#Outer">
+                            <Setter Property="IsVisible" Value="False" />
+                        </Style>
+                    </ItemsControl.Styles>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Classes="desktop-icon"
+                                    Command="{Binding ExecuteCommand, Mode=OneWay}">
+                                <StackPanel Orientation="Vertical">
+                                    <Border x:Name="IconArea"
+                                            Padding="24,8">
+                                        <Rectangle Fill="#FFFF00FF"
+                                            Width="{Binding $parent[UserControl].DataContext.DesktopIconSize, Mode=OneWay}"
+                                            Height="{Binding $self.Bounds.Width, Mode=OneWay}" />
+                                    </Border>
+                                    <TextBlock Text="{Binding Name, Mode=OneWay}"
+                                            Foreground="White"
+                                            HorizontalAlignment="Stretch"
+                                            TextAlignment="Center"
+                                            MaxWidth="{Binding #IconArea.Bounds.Width}"
+                                            TextWrapping="WrapWithOverflow" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl x:Name="WindowsRoot"
+                            ItemsSource="{Binding Windows}"
+                            ClipToBounds="False"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ctl:MWindow x:Name="Window"
+                                        Header="{Binding Title, Mode=OneWay}"
+                                        Content="{Binding Mode=OneWay}"
+                                        ContentTemplate="{DynamicResource WindowContentLocator}"
+                                        Left="{Binding X, Mode=TwoWay}"
+                                        Top="{Binding Y, Mode=TwoWay}"
+                                        WinWidth="{Binding Width, Mode=TwoWay}"
+                                        WinHeight="{Binding Height, Mode=TwoWay}"
+                                        IsActive="{Binding IsActive, Mode=TwoWay}"
+                                        IsMaximized="{Binding IsMaximized, Mode=TwoWay}"
+                                        CanResize="{Binding CanResize, Mode=OneWay}"
+                                        CloseCommand="{Binding Close, Mode=OneWay}"
+                                        ActivateCommand="{Binding Activate, Mode=OneWay}">
+                                <!--
+                                <ctl:MWindow.ContentTemplate>
+                                </ctl:MWindow.ContentTemplate>
+                                -->
+                            </ctl:MWindow>
+                            <!--
+                                        AnimationState="{Binding IsOpened, Converter={x:Static ctl:MWindowAnimationStateToIsOpenedBooleanConverter.Instance}, Mode=TwoWay}"
+                            -->
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Panel ClipToBounds="False"
+                                PointerPressed="Windows_PointerPressed"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" />
+                                <!--
+                                AttachedToVisualTree="Windows_PanelAttachedToVisualTree"
+                                -->
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            <TextBlock Text="MOCKUP"
+                    FontFamily="Ubuntu"
+                    FontSize="64"
+                    Foreground="#80000000"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsHitTestVisible="False" />
+            </Panel>
+    </DockPanel>
+</UserControl>

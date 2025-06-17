@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="ReactiveDream.Views.RunWindowView">
+    <UserControl.Styles>
+        <Style Selector=":is(Control)#Footer Button">
+            <Setter Property="Margin" Value="4,0,0,0" />
+            <Setter Property="Width" Value="89" />
+        </Style>
+    </UserControl.Styles>
+    <Grid Margin="11,18"
+        ColumnDefinitions="32,11,*"
+        RowDefinitions="Auto,10,21,*,Auto">
+        <ContentControl Theme="{DynamicResource Placeholder}"
+                        Width="32"
+                        Height="32"
+                        Grid.Column="0"
+                        Grid.Row="0" />
+        <!--
+        <Border Width="32"
+                Height="32"
+                Background="#FF000000">
+            <TextBlock Foreground="#FFFFFFFF"
+                    Text="PLACEHOLDER"
+                    FontSize="9"
+                    TextWrapping="Wrap"
+                    Grid.Column="0"
+                    Grid.Row="0" />
+        </Border>
+        -->
+        <TextBlock Text="Type the name of a program, folder, document, or Internet resource, and ReactOS will open it for you."
+                TextWrapping="Wrap"
+                Grid.Column="2"
+                Grid.Row="0" />
+
+
+            <TextBlock Text="Open:"
+                    Grid.Column="0"
+                    Grid.Row="2" />
+            <AutoCompleteBox
+                    Grid.Column="2"
+                    Grid.Row="2" />
+
+
+        <UniformGrid x:Name="Footer"
+                    HorizontalAlignment="Right"
+                    Rows="1"
+                    Grid.Column="0"
+                    Grid.Row="4"
+                    Grid.ColumnSpan="3">
+            <Button Content="OK"
+                    IsEnabled="False" />
+            <Button Content="Cancel" />
+            <Button Content="Browse..." />
+        </UniformGrid>
+    </Grid>
+</UserControl>

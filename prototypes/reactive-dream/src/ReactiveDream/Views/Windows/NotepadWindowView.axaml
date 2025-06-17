@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="ReactiveDream.Views.NotepadWindowView">
+    <DockPanel>
+        <Menu IsEnabled="False"
+            DockPanel.Dock="Top">
+            <MenuItem Header="Menubar NYI" />
+            <MenuItem Header="F_ile" />
+            <MenuItem Header="E_dit" />
+            <MenuItem Header="Fo_rmat" />
+            <MenuItem Header="V_iew" />
+            <MenuItem Header="H_elp" />
+        </Menu>
+        
+        <ContentControl Content="Status bar NYI"
+                        Theme="{DynamicResource Placeholder}"
+                        Height="23"
+                        DockPanel.Dock="Bottom" />
+        <TextBox Text="{Binding DocumentText, Mode=TwoWay}"
+                AcceptsReturn="True"
+                AcceptsTab="False"
+                BorderThickness="0"
+                CornerRadius="0" />
+    </DockPanel>
+</UserControl>

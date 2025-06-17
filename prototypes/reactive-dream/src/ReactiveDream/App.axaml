@@ -1,0 +1,53 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:ReactiveDream"
+             xmlns:c="using:ReactiveDream.Controls"
+             xmlns:s="using:ReactiveDream.Styles"
+             x:Class="ReactiveDream.App">
+    <Application.DataTemplates>
+        <local:ViewLocator />
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        <FluentTheme />
+        <s:ReactiveTheme />
+    </Application.Styles>
+            
+    <Application.Resources>
+        <ControlTheme x:Key="Placeholder"
+                    TargetType="{x:Type ContentControl}">
+            <Setter Property="Content" Value="PLACEHOLDER" />
+            <Setter Property="FontSize" Value="9" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Background="#FF000000">
+                            <ContentPresenter x:Name="PART_ContentPresenter"
+                                            Foreground="#FFFFFFFF"
+                                            TextWrapping="Wrap"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
+                                            Padding="{TemplateBinding Padding}"
+                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </ControlTheme>
+        <!--
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Styles.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+        -->
+        <StyleInclude x:Key="DWMStyles" Source="avares://ReactiveDream/Styles/DWMStyles.axaml" />
+    </Application.Resources>
+</Application>

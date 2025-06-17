@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme x:Key="Taskbar"
+                TargetType="{x:Type ContentControl}"
+                BasedOn="{StaticResource TaskbarBase}">
+        <Setter Property="Background" Value="{DynamicResource Window.Border.OpaqueBrush}" />
+
+        <Style Selector="^ /template/ :is(Decorator).blurBehind">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

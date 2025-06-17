@@ -1,0 +1,182 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctl="using:ReactiveDream.Controls">
+    <ControlTheme x:Key="ReactiveCaptionButtonBase"
+                TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="#00808080" />
+        <Setter Property="Foreground" Value="{DynamicResource Window.CaptionButton.Idle.Glyph.BackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Window.CaptionButton.Idle.Glyph.BorderBrush}" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Background="#01000000">
+                    <Panel x:Name="ApparentRoot">
+                        <Panel Classes="bg">
+                            <Border Classes="bgcolor"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="2" />
+                            <Border Background="{DynamicResource Window.CaptionButton.Shine.BackgroundBrush}"
+                                    BorderBrush="#B2FFFFFF"
+                                    BorderThickness="1"
+                                    CornerRadius="2">
+                                <Viewbox Stretch="Fill">
+                                    <Rectangle Fill="{DynamicResource Window.CaptionButton.Idle.BackgroundBrush}"
+                                                Width="42"
+                                                Height="36" />
+                                </Viewbox>
+                            </Border>
+                            <Border BorderBrush="{DynamicResource Window.Border.Interior.InnerBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="2">
+                                <Border BorderBrush="{DynamicResource Window.Border.Interior.OuterBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="1" />
+                            </Border>
+                        </Panel>
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                        Background="Transparent"
+                                        Content="{TemplateBinding Content}"
+                                        Margin="0,0,1,1"
+                                        Padding="{TemplateBinding Padding}" />
+                    </Panel>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+
+        <Style Selector="^:not(:last-child)">
+            <Setter Property="Margin" Value="0,-10,0,0" />
+        </Style>
+        <Style Selector="^:not(:last-child) /template/ :is(Control)#ApparentRoot">
+            <Setter Property="Margin" Value="0,10,0,0" />
+        </Style>
+
+
+        <Style Selector="^:last-child">
+            <Setter Property="Margin" Value="0,-10,-10,0" />
+        </Style>
+        <Style Selector="^:last-child /template/ :is(Control)#ApparentRoot">
+            <Setter Property="Margin" Value="0,10,10,0" />
+        </Style>
+
+
+        <Style Selector="^ /template/ Panel.bg,
+                        ^ /template/ Border.bgcolor">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <!--
+                    <BrushTransition Property="Background" Duration="{StaticResource Window.CaptionButton.FadeDuration}" />
+                    -->
+                    <DoubleTransition Property="Opacity" Duration="{StaticResource Window.CaptionButton.FadeDuration}" />
+                </Transitions>
+            </Setter>
+        </Style>
+            
+        <Style Selector="^ /template/ Border.bgcolor">
+            <Setter Property="Opacity" Value="0" />
+        </Style>
+        <Style Selector="^:pointerover /template/ Border.bgcolor">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Panel.bg">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </ControlTheme>
+    <ControlTheme x:Key="ReactiveCaptionButton"
+                TargetType="{x:Type Button}"
+                BasedOn="{StaticResource ReactiveCaptionButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource Window.CaptionButton.Hover.BackgroundBrush}" />
+        
+        <Style Selector="^:pressed /template/ Border.bgcolor">
+            <Setter Property="Background" Value="{DynamicResource Window.CaptionButton.Pressed.BackgroundBrush}" />
+        </Style>
+    </ControlTheme>
+    <ControlTheme x:Key="ReactiveCloseButton"
+                TargetType="{x:Type Button}"
+                BasedOn="{StaticResource ReactiveCaptionButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource Window.CloseButton.Hover.BackgroundBrush}" />
+
+        <Style Selector="^:pressed /template/ Border.bgcolor">
+            <Setter Property="Background" Value="{DynamicResource Window.CloseButton.Pressed.BackgroundBrush}" />
+        </Style>
+    </ControlTheme>
+    
+    <ControlTheme x:Key="{x:Type ctl:MCaptionButtons}"
+                TargetType="{x:Type ctl:MCaptionButtons}">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MaxHeight" Value="26" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="UseUniformButtonSizing" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel x:Name="LayoutRoot"
+                            Orientation="Horizontal"
+                            Margin="0,6,6,0"
+                            Spacing="2"
+                            TextElement.FontSize="10"
+                            Classes.noResize="{Binding !CanResize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ctl:MWindow}}, Mode=OneWay}">
+                    <Button x:Name="PART_FullScreenButton"
+                            Theme="{StaticResource ReactiveCaptionButton}"
+                            IsVisible="False"
+                            Classes="hide-when-no-resize">
+                    </Button>
+                    <Button x:Name="PART_MinimizeButton"
+                            Theme="{StaticResource ReactiveCaptionButton}"
+                            AutomationProperties.Name="Minimize"
+                            Classes="hide-when-no-resize">
+                        <Panel>
+                            <Path Classes="stroke"
+                                Data="{Binding #MinIcon.Data}" />
+                            <Path x:Name="MinIcon"
+                                Data="M 1 6 H 9 V 8 H 1 Z" />
+                        </Panel>
+                    </Button>
+                    <Button x:Name="PART_RestoreButton"
+                            Theme="{StaticResource ReactiveCaptionButton}"
+                            AutomationProperties.Name="Maximize"
+                            Classes="hide-when-no-resize">
+                        <Panel>
+                            <Path Classes="stroke"
+                                Data="{Binding #MaxIcon.Data}" />
+                            <Path x:Name="MaxIcon"
+                                Data="M 1 1 H 9 V 9 H 1 Z
+                                    M 3 3 H 7 V 7 H 3 Z" />
+                        </Panel>
+                    </Button>
+                    <Button x:Name="PART_CloseButton"
+                            Theme="{StaticResource ReactiveCloseButton}"
+                            AutomationProperties.Name="Close">
+                        <Panel>
+                            <Path Classes="stroke"
+                                Data="{Binding #CloseIcon.Data}" />
+                            <Path x:Name="CloseIcon"
+                                Data="M 1 1
+                                H 2.5 L 5 3.5 L 7.5 1 H 9
+                                V 2.5 L 6.5 5 L 9 7.5 V 9
+                                H 7.5 L 5 6.5 L 2.5 9 H 1
+                                V 7.5 L 3.5 5 L 1 2.5 Z" />
+                        </Panel>
+                    </Button>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^ /template/ Button > Panel">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^ /template/ Button Path.stroke">
+            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="Stroke" Value="{Binding $parent[Button].BorderBrush}" />
+        </Style>
+        <Style Selector="^ /template/ Button Path:not(.stroke)">
+            <Setter Property="Fill" Value="{Binding $parent[Button].Foreground}" />
+        </Style>
+        <Style Selector="^ /template/ StackPanel#LayoutRoot.noResize Button.hide-when-no-resize">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

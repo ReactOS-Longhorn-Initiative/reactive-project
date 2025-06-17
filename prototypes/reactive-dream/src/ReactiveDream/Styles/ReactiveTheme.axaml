@@ -1,0 +1,22 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="ReactiveDream.Styles.ReactiveTheme">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--
+                ResourceDictionary
+                -->
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Resources.axaml" />
+
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/Button.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/Menu.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/CaptionButtons.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/WindowBase.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/Window.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/TaskbarBase.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/Taskbar.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+</Styles>

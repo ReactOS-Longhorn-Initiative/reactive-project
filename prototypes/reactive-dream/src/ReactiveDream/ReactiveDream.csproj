@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<OutputType>WinExe</OutputType>
+
+		<Nullable>disable</Nullable>
+		<AvVer>11.0.5</AvVer>
+
+		<RosDir>../../reactos</RosDir>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AvaloniaResource Include="Assets/**" />
+		<AvaloniaResource Include="placeholder/**" />
+
+		<EmbeddedResource Include="$(RosDir)/media/themes/Reactive/reactive.msstyles/bitmaps/**">
+			<LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+		</EmbeddedResource>
+		<EmbeddedResource Include="$(RosDir)/modules/**">
+			<LogicalName>%(RecursiveDir)%(Filename)</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="$(AvVer)" />
+		<PackageReference Include="Avalonia.Skia" Version="$(AvVer)" />
+		<PackageReference Include="Avalonia.Desktop" Version="$(AvVer)" />
+		<PackageReference Include="Avalonia.Diagnostics" Version="$(AvVer)" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="$(AvVer)" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvVer)" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvVer)" />
+
+        <PackageReference Include="Svg.Skia" Version="1.0.0.16" />
+	</ItemGroup>
+</Project>

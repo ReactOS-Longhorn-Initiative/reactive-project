@@ -1,0 +1,210 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctl="using:ReactiveDream.Controls">
+    <ControlTheme x:Key="WindowBase"
+            TargetType="{x:Type ctl:MWindow}">
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Background" Value="#FFDFDFDF" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel x:Name="SizeRoot">
+                    <Panel x:Name="PART_3DRoot">
+                        <ctl:CustomBlurBehind Classes="blurBehind"
+                                            BlurRadius="4"
+                                            CornerRadius="{Binding $parent[Border].CornerRadius, Mode=OneWay}"
+                                            IsVisible="False" />
+                        <Border x:Name="FrameRoot"
+                                Background="{DynamicResource Window.Border.BackgroundBrush}"
+                                BorderBrush="{DynamicResource Window.Border.Exterior.OuterBorderBrush}">
+                            <Border 
+                                    Background="{TemplateBinding BorderBrush}"
+                                    BorderBrush="{DynamicResource Window.Border.Exterior.InnerBorderBrush}"
+                                    >
+                                <Panel>
+                                    <Rectangle Fill="{DynamicResource Window.Border.SideShine.BackgroundBrush}"
+                                            VerticalAlignment="Top"
+                                            Height="94"
+                                            Margin="0,32,0,0" />
+                                    <Viewbox Height="48"
+                                            Stretch="Fill"
+                                            VerticalAlignment="Top">
+                                        <Rectangle Fill="{DynamicResource Window.Border.TopShine.BackgroundBrush}"
+                                                Width="48"
+                                                Height="48" />
+                                    </Viewbox>
+                                </Panel>
+                            </Border>
+                        </Border>
+                        <DockPanel>
+                            <Panel x:Name="TitlebarArea"
+                                    DockPanel.Dock="Top">
+                                <Panel>
+                                    <Panel Margin="12,6"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center">
+                                        <Border Classes="textGlow"
+                                                Height="1"
+                                                HorizontalAlignment="Stretch"
+                                                Margin="4,0"
+                                                IsVisible="False"
+                                        />
+                                        <TextBlock x:Name="TitlebarText" Text="{TemplateBinding Header}" />
+                                    </Panel>
+                                    <Thumb x:Name="PART_DragTitleBar"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch" />
+                                    <ctl:MCaptionButtons x:Name="PART_CaptionButtons"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"
+                                                    Height="{Binding #PART_DragTitleBar.Bounds.Height, Mode=OneWay}" />
+                                </Panel>
+                            </Panel>
+                            <Panel x:Name="ClientArea" Margin="{TemplateBinding BorderThickness}">
+                                <Border x:Name="InteriorBorder"
+                                        BorderBrush="{DynamicResource Window.Border.Interior.OuterBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="2"
+                                        Margin="-2">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{DynamicResource Window.Border.Interior.InnerBorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="1" />
+                                </Border>
+                                <ContentPresenter x:Name="PART_ContentPresenter"
+                                                Content="{TemplateBinding Content}"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                HorizontalContentAlignment="Stretch"
+                                                VerticalContentAlignment="Stretch"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                Margin="{TemplateBinding Padding}" />
+                            </Panel>
+                        </DockPanel>
+                        <Grid x:Name="DragResizeEdges"
+                                ColumnDefinitions="Auto,*,Auto"
+                                RowDefinitions="Auto,*,Auto">
+                            <Thumb x:Name="PART_DragResizeTL"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Cursor="TopLeftCorner" />
+                            <Thumb x:Name="PART_DragResizeT"
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    Cursor="TopSide" />
+                            <Thumb x:Name="PART_DragResizeTR"
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    Cursor="TopRightCorner" />
+                                    
+                            <Thumb x:Name="PART_DragResizeL"
+                                    Grid.Column="0"
+                                    Grid.Row="1"
+                                    Cursor="LeftSide" />
+                            <Thumb x:Name="PART_DragResizeR"
+                                    Grid.Column="2"
+                                    Grid.Row="1"
+                                    Cursor="RightSide" />
+
+                            <Thumb x:Name="PART_DragResizeBL"
+                                    Grid.Column="0"
+                                    Grid.Row="2"
+                                    Cursor="BottomLeftCorner" />
+                            <Thumb x:Name="PART_DragResizeB"
+                                    Grid.Column="1"
+                                    Grid.Row="2"
+                                    Cursor="BottomSide" />
+                            <Thumb x:Name="PART_DragResizeBR"
+                                    Grid.Column="2"
+                                    Grid.Row="2"
+                                    Cursor="BottomRightCorner" />
+                        </Grid>
+                    </Panel>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^ /template/ Thumb">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Rectangle Fill="#01000000" />
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="^ /template/ Grid#DragResizeEdges > Thumb">
+            <Setter Property="MinWidth" Value="8" />
+            <Setter Property="MinHeight" Value="8" />
+        </Style>
+
+        <Style Selector="^[AnimationState=Closing]">
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+
+
+
+
+        <Style Selector="^[IsMaximized=False]">
+            <Setter Property="Margin">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static ctl:MWindowLeftTopToMarginConverter.Instance}">
+                        <Binding Path="Left"
+                                RelativeSource="{RelativeSource Mode=Self}"
+                                Mode="OneWay" />
+                        <Binding Path="Top"
+                                RelativeSource="{RelativeSource Mode=Self}"
+                                Mode="OneWay" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Style Selector="^ /template/ Panel#SizeRoot">
+                <Setter Property="Width" Value="{Binding WinWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+                <Setter Property="Height" Value="{Binding WinHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+            </Style>
+
+            <Style Selector="^ /template/ Panel#PART_3DRoot">
+                <Setter Property="Margin" Value="0,0,-16,-40" />
+            </Style>
+
+            <Style Selector="^ /template/ :is(Panel)#ClientArea">
+                <Setter Property="Margin" Value="8,0,8,8" />
+            </Style>
+
+
+            <Style Selector="^ /template/ Border#FrameRoot,
+                            ^ /template/ Border#FrameRoot > Border">
+                <Setter Property="BorderThickness" Value="1" />
+            </Style>
+            <Style Selector="^ /template/ Border#FrameRoot">
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+            <Style Selector="^ /template/ Border#FrameRoot > Border">
+                <Setter Property="CornerRadius" Value="4" />
+            </Style>
+            
+            <Style Selector="^ /template/ :is(Panel)#TitlebarArea">
+                <Setter Property="MinHeight" Value="32" />
+            </Style>
+        </Style>
+        <Style Selector="^[IsMaximized=True]">
+            <Setter Property="Width" Value="{Binding $parent[ItemsControl].Bounds.Width, Mode=OneWay}" />
+            <Setter Property="Height" Value="{Binding $parent[ItemsControl].Bounds.Height, Mode=OneWay}" />
+
+
+            <Style Selector="^ /template/ Grid#DragResizeEdges">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+            
+            <Style Selector="^ /template/ :is(Panel)#TitlebarArea">
+                <Setter Property="MinHeight" Value="28" />
+            </Style>
+            <Style Selector="^ /template/ ctl|MCaptionButtons#PART_CaptionButtons">
+                <Setter Property="Height" Value="32" />
+                <Setter Property="Margin" Value="0,-4,-4,0" />
+            </Style>
+        </Style>
+        <!--
+        <Style Selector="^ /template/ Panel#TitlebarArea > Panel">
+            <Setter Property="Background" Value="#80FF00FF"/>
+        </Style>
+        -->
+    </ControlTheme>
+</ResourceDictionary>
