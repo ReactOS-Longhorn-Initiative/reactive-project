@@ -4,7 +4,7 @@ using Avalonia;
 
 namespace ReactiveDream.ViewModels
 {
-    public class WindowViewModelBase
+    public abstract class WindowViewModelBase
         : ViewModelBase
     {
         string _title = string.Empty;
@@ -82,40 +82,45 @@ namespace ReactiveDream.ViewModels
         }
 
 
-        WeakReference<MainViewModel> _vm;
+        WeakReference<MainViewModel> _mainVM;
+        protected MainViewModel MainVM
+        {
+            get => _mainVM.TryGetTarget(out MainViewModel mainVM)
+                ? mainVM
+                : null
+            ;
+        }
+
+
         public WindowViewModelBase()
             : base()
         {
             Rect defaultBounds = CreateDefaultBounds();
 
-            if (_x < 0)
-                X = defaultBounds.X;
-
-            if (_y < 0)
-                Y = defaultBounds.Y;
-
-            if (_width <= 0)
-                Width = defaultBounds.Width;
-
-            if (_height <= 0)
-                Height = defaultBounds.Height;
+            X = defaultBounds.X;
+            Y = defaultBounds.Y;
+            Width = defaultBounds.Width;
+            Height = defaultBounds.Height;
         }
+
+
         public TWindowVM WithMainVM<TWindowVM>(MainViewModel vm)
         {
-            _vm ??= new(vm);
+            _mainVM ??= new(vm);
+            OnReceivedMainVM();
             return (TWindowVM)(object)this;
         }
-        /*public WindowViewModel(MainViewModel vm, string title, object content = null, double x = 40, double y = 40, double width = 320, double height = 240)
-            : this()
+        protected virtual void OnReceivedMainVM()
+        {}
+
+
+        public void SetBoundsFromAxes(WindowBoundsAxis xAxis, WindowBoundsAxis yAxis)
         {
-            Title = title;
-            Content = content;
-            
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
-        }*/
+            X = xAxis.Position;
+            Y = yAxis.Position;
+            Width = xAxis.Size;
+            Height = yAxis.Size;
+        }
 
 
         protected virtual Rect CreateDefaultBounds()
@@ -124,26 +129,18 @@ namespace ReactiveDream.ViewModels
 
 
 
+        
+        public void CloseCommand(object _)
+            => Close();
+
         public void Close()
-        {
-            Timer timer = new Timer(1000);
-            timer.Elapsed += CloseTimer_Elapsed;
-            timer.Start();
-        }
-        void CloseTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (sender is Timer timer)
-            {
-                timer.Stop();
-                timer.Elapsed -= CloseTimer_Elapsed;
-            }
-            WindowClosed?.Invoke(this, new(this));
-        }
+            => WindowClosing?.Invoke(this, new());
+
 
         public void Activate()
             => WindowActivated?.Invoke(this, new(this));
 
+        public event EventHandler<EventArgs> WindowClosing;
         public static event EventHandler<WindowActionEventArgs> WindowActivated;
-        public static event EventHandler<WindowActionEventArgs> WindowClosed;
     }
 }

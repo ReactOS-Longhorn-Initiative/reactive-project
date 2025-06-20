@@ -1,28 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Timers;
-using System.Windows.Input;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Chrome;
-using Avalonia.Controls.Primitives;
-using Avalonia.Data;
 using Avalonia.Data.Converters;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using Avalonia.Layout;
-using Avalonia.Markup.Xaml;
-using Avalonia.Media;
-using Avalonia.Threading;
-using Avalonia.VisualTree;
 
 namespace ReactiveDream.Controls
 {
-    public class MWindowLeftTopToMarginConverter : IMultiValueConverter
+    public class MWindowLeftTopToMarginConverter
+        : IMultiValueConverter
     {
-        static readonly Thickness _EMPTY = new Thickness(0);
+        static readonly Thickness _EMPTY = new(0);
         public object Convert(IList<object> values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values.Count < 2)

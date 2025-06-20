@@ -1,0 +1,256 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="using:ReactiveDream.Styles"
+            xmlns:ctl="using:ReactiveDream.Controls"
+            x:Class="ReactiveDream.Views.PersonalizationWindowView">
+    <UserControl.Resources>
+        <ItemsPanelTemplate x:Key="WrapPanelItemsPanelTemplate">
+            <WrapPanel />
+        </ItemsPanelTemplate>
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector=":is(Control)#Footer Button">
+            <Setter Property="Width" Value="89" />
+        </Style>
+
+        <Style Selector="ListBox#Wallpapers TextBlock.title">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,8,0,0" />
+        </Style>
+
+        <Style Selector="ListBox#VisualStyles DockPanel.visual-style > TextBlock">
+            <Setter Property="Width" Value="120" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,8,0,0" />
+        </Style>
+        <Style Selector="ListBox#VisualStyles DockPanel.visual-style > :is(Control):not(TextBlock)">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Height" Value="80" />
+        </Style>
+
+        <Style Selector="ListBox#AccentColorList ListBoxItem">
+            <Setter Property="Width" Value="72" />
+            <Setter Property="Height" Value="72" />
+            <Setter Property="Padding" Value="8" />
+        </Style>
+    </UserControl.Styles>
+    <DockPanel Margin="6,7">
+        <StackPanel x:Name="Footer"
+                    Orientation="Horizontal"
+                    Margin="0,8,0,0"
+                    Spacing="2"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Bottom">
+            <Button Content="OK"
+                    Command="{Binding ApplyCommand, Mode=OneWay}"
+                    CommandParameter="True" />
+            <Button Content="Cancel"
+                    Command="{Binding CloseCommand, Mode=OneWay}" />
+            <Button Content="Apply"
+                    Command="{Binding ApplyCommand, Mode=OneWay}"
+                    CommandParameter="False" />
+        </StackPanel>
+        <TabControl x:Name="PageSwitcher"
+                Padding="14,12"
+                SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay, FallbackValue=1}">
+            <TabItem Header="Theme"
+                    IsEnabled="False" />
+            <TabItem x:Name="BackgroundTab"
+                    Header="Background">
+                <DockPanel>
+                    <ComboBox SelectedItem="{Binding WallpaperPosition, Mode=TwoWay}"
+                            ItemsSource="{Binding $self, Converter={x:Static ctl:EnumToIEnumerableConverter.Instance}, ConverterParameter={x:Type ctl:WallpaperImagePosition}, Mode=OneTime}"
+                            DisplayMemberBinding="{Binding Converter={x:Static ctl:EnumValueToNameConverter.Instance}, ConverterParameter={x:Type ctl:WallpaperImagePosition}, Mode=OneWay}"
+                            DockPanel.Dock="Bottom" />
+                    <ListBox x:Name="Wallpapers"
+                            ItemsSource="{Binding Wallpapers, Mode=OneWay}"
+                            SelectedItem="{Binding SelectedWallpaper, Mode=TwoWay}"
+                            ItemsPanel="{DynamicResource WrapPanelItemsPanelTemplate}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Title, Mode=OneWay}"
+                                            Classes="title"
+                                            DockPanel.Dock="Bottom" />
+                                    <Image Source="{Binding PreviewImage, Mode=OneWay}"
+                                        HorizontalAlignment="Center"
+                                        Height="120"
+                                        Stretch="Uniform" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Screensaver"
+                    IsEnabled="False" />
+            <TabItem Header="Appearance">
+                <Grid Margin="14,12"
+                    ColumnDefinitions="Auto,Auto,*"
+                    RowDefinitions="*,Auto,Auto"
+                >
+                <!--
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"
+                                        MinWidth="344" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="2*"
+                                    MinHeight="191" />
+                    </Grid.RowDefinitions>
+                -->
+                    <ListBox x:Name="VisualStyles"
+                            ItemsPanel="{DynamicResource WrapPanelItemsPanelTemplate}"
+                            SelectedItem="{Binding ElementName=ReactiveVisualStyleItem, Mode=OneTime}"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Grid.ColumnSpan="3">
+                        <ListBoxItem IsEnabled="False">
+                            <DockPanel Classes="visual-style">
+                                <TextBlock Text="Lautus"
+                                        DockPanel.Dock="Bottom" />
+                                <ContentControl Theme="{DynamicResource Placeholder}" />
+                            </DockPanel>
+                        </ListBoxItem>
+                        <ListBoxItem IsEnabled="False">
+                            <DockPanel Classes="visual-style">
+                                <TextBlock Text="Lunar"
+                                        DockPanel.Dock="Bottom" />
+                                <ContentControl Theme="{DynamicResource Placeholder}" />
+                            </DockPanel>
+                        </ListBoxItem>
+                        <ListBoxItem IsEnabled="False">
+                            <DockPanel Classes="visual-style">
+                                <TextBlock Text="Mizu"
+                                        DockPanel.Dock="Bottom" />
+                                <ContentControl Theme="{DynamicResource Placeholder}" />
+                            </DockPanel>
+                        </ListBoxItem>
+                        <ListBoxItem IsEnabled="False">
+                            <DockPanel Classes="visual-style">
+                                <TextBlock Text="Modern"
+                                        DockPanel.Dock="Bottom" />
+                                <ContentControl Theme="{DynamicResource Placeholder}" />
+                            </DockPanel>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="ReactiveVisualStyleItem">
+                            <DockPanel Classes="visual-style">
+                                <TextBlock Text="Reactive"
+                                        DockPanel.Dock="Bottom" />
+                                <ContentControl Theme="{DynamicResource Placeholder}" />
+                            </DockPanel>
+                        </ListBoxItem>
+                    </ListBox>
+
+
+                    <Control x:Name="GapSizer"
+                            Width="8"
+                            Height="{Binding $self.Bounds.Width, Mode=OneWay}"
+                            Grid.Column="1"
+                            Grid.Row="1" />
+
+
+                    <StackPanel Orientation="Vertical"
+                                Spacing="8"
+                                Grid.Column="2"
+                                Grid.Row="2">
+                        <HeaderedContentControl Header="Variant">
+                            <ComboBox x:Name="VariantComboBox">
+                                <ComboBoxItem x:Name="ReactiveDWMItem"
+                                            Content="Dream (DWM)"
+                                            IsSelected="{Binding IsCompositionActive, Mode=TwoWay}" />
+                                <ComboBoxItem Content="Daydream (Basic)"
+                                            IsSelected="{Binding !#ReactiveDWMItem.IsSelected, Mode=OneWay}" />
+                            </ComboBox>
+                        </HeaderedContentControl>
+                        <HeaderedContentControl Header="Font size"
+                                                IsEnabled="False">
+                            <ComboBox>
+                                <ComboBoxItem Content="Normal" />
+                                <ComboBoxItem Content="Large Fonts" />
+                                <ComboBoxItem Content="Extra Large Fonts" />
+                            </ComboBox>
+                        </HeaderedContentControl>
+                    </StackPanel>
+
+
+                    <ContentPresenter x:Name="AppearancePreview"
+                                    Content="{Binding VisualStyles.SelectedItem, Mode=OneWay}"
+                                    MinWidth="360"
+                                    MinHeight="240"
+                                    Grid.Column="0"
+                                    Grid.Row="2">
+                        <ContentPresenter.Styles>
+                            <s:ReactiveTheme IsCompositionActive="{Binding IsCompositionActive, Mode=OneWay}" />
+                        </ContentPresenter.Styles>
+                        <ContentPresenter.ContentTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource Theme.Wallpaper.Color.Brush}"
+                                        BorderBrush="#00000000"
+                                        BorderThickness="3">
+                                    <Grid Margin="8,8,28,28"
+                                        ColumnDefinitions="12*,10*,78*,144*,71*,17*,12*"
+                                        RowDefinitions="27*,32*,30*,58*,20*,24*,12*">
+                                        <ctl:MWindowBase Header="Inactive Window"
+                                                        Grid.Column="1"
+                                                        Grid.Row="1"
+                                                        Grid.ColumnSpan="4"
+                                                        Grid.RowSpan="3"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        IsActive="False" />
+
+                                        <ctl:MWindowBase Header="Active Window"
+                                                        Grid.Column="2"
+                                                        Grid.Row="2"
+                                                        Grid.ColumnSpan="4"
+                                                        Grid.RowSpan="3"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        IsActive="True">
+                                            <DockPanel>
+                                                <ScrollBar Orientation="Vertical"
+                                                        DockPanel.Dock="Right"
+                                                        IsEnabled="False" />
+                                                <TextBlock Text="Window Text"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top" />
+                                            </DockPanel>
+                                        </ctl:MWindowBase>
+
+                                        <ctl:MWindowBase Header="Message Box"
+                                                        Grid.Column="3"
+                                                        Grid.Row="3"
+                                                        Width="144"
+                                                        Height="72"
+                                                        Margin="-72,-47,-72,-25"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        IsActive="True"
+                                                        CanResize="False">
+                                            <Button Content="OK"
+                                                    MinWidth="80"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center" />
+                                        </ctl:MWindowBase>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ContentPresenter.ContentTemplate>
+                    </ContentPresenter>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Settings"
+                    IsEnabled="False" />
+        </TabControl>
+    </DockPanel>
+</UserControl>

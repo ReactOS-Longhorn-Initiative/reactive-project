@@ -7,16 +7,4 @@
         x:Name="Window"
         Title="Reactive Dream"
         Width="800"
-        Height="600">
-<!--
-        TransparencyLevelHint="Blur"
-        Icon="avares://ReactiveDream/Assets/orb.png"
-        SystemDecorations="None"
--->
-
-<!--
-    <Panel>
-        <ContentPresenter Content="{Binding #Window.DataContext, Mode=OneWay}" />
-    </Panel>
--->
-</Window>
+        Height="600" />

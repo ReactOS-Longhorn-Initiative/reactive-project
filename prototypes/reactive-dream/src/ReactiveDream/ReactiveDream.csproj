@@ -13,12 +13,17 @@
 		<AvaloniaResource Include="Assets/**" />
 		<AvaloniaResource Include="placeholder/**" />
 
-		<EmbeddedResource Include="$(RosDir)/media/themes/Reactive/reactive.msstyles/bitmaps/**">
-			<LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-		</EmbeddedResource>
+		<!--
+		https://blog.nerdbank.net/2023/04/11/embedded-resources-in-c-projects-that-retain-slashes/
+		-->
 		<EmbeddedResource Include="$(RosDir)/modules/**">
 			<LogicalName>$([System.String]::Copy('%(RecursiveDir)').Replace('\','/'))%(Filename)</LogicalName>
 		</EmbeddedResource>
+		<!--
+		<EmbeddedResource Include="$(RosDir)/media/themes/Reactive/reactive.msstyles/bitmaps/**">
+			<LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+		</EmbeddedResource>
+		-->
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="$(AvVer)" />

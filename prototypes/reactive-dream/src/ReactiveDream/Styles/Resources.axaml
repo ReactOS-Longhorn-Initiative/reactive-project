@@ -1,25 +1,31 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-
     <FontFamily x:Key="ContentControlThemeFontFamily">Ubuntu</FontFamily>
     <x:Double x:Key="ControlContentThemeFontSize">11</x:Double>
 
+    <Color x:Key="Foreground.Color">#FF000000</Color>
+    <Color x:Key="Foreground.Disabled.Color">#FF606060</Color>
+
+    <x:Double x:Key="Theme.Blur.Radius">4</x:Double>
+
 
     <CornerRadius x:Key="CornerRadiusMinus1">-1</CornerRadius>
-    
-    
-    <Color x:Key="Theme.Color">#4C46A9D5</Color>
+
+
+
+
+
+
+    <Color x:Key="Theme.DefaultColor">#4C46A9D5</Color>
+    <StaticResource x:Key="Theme.Color" ResourceKey="Theme.DefaultColor" />
     <SolidColorBrush x:Key="Theme.Color.Brush" Color="{DynamicResource Theme.Color}" />
-    <ExperimentalAcrylicMaterial x:Key="Theme.Color.AcrylicMaterial"
-                                TintColor="{DynamicResource Theme.Color}"
-                                TintOpacity="1"
-                                MaterialOpacity="0.06"
-                                    />
-    <!--
-                                BackgroundSource="Digger"
-                                0.29803921568627450980392156862745
-    -->
+
+    <Color x:Key="Theme.Wallpaper.Color">#FF004060</Color>
+    <SolidColorBrush x:Key="Theme.Wallpaper.Color.Brush" Color="{DynamicResource Theme.Wallpaper.Color}" />
+
+
+
+
     <x:TimeSpan x:Key="Button.FadeDuration">0:0:0.0875</x:TimeSpan>
     <LinearGradientBrush x:Key="Button.Idle.Background"
                         StartPoint="0%,0%"
@@ -69,8 +75,38 @@
         <GradientStop Offset="0.25" Color="#80FFFFFF" />
         <GradientStop Offset="1" Color="#00FFFFFF" />
     </RadialGradientBrush>
-    <SolidColorBrush x:Key="Button.Foreground">#FF000000</SolidColorBrush>
-    <SolidColorBrush x:Key="Button.Disabled.Foreground">#FF606060</SolidColorBrush>
+    <SolidColorBrush x:Key="Button.Foreground" Color="{DynamicResource Foreground.Color}" />
+    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="{DynamicResource Foreground.Disabled.Color}" />
+
+
+
+
+    <Color x:Key="TabControl.Background.Color0">#FFF3F7F7</Color>
+    <Color x:Key="TabControl.Border.Color">#FF5B8196</Color>
+    <LinearGradientBrush x:Key="TabControl.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="{DynamicResource TabControl.Background.Color0}" />
+        <GradientStop Offset="1" Color="#FFEBF1F2" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="TabControl.BorderBrush" Color="{DynamicResource TabControl.Border.Color}" />
+
+
+
+
+    <SolidColorBrush x:Key="TabItem.Idle.Background" Color="{DynamicResource TabControl.Background.Color0}" />
+    <SolidColorBrush x:Key="TabItem.Idle.BorderBrush">#FF9AB0BC</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItem.Foreground" Color="{DynamicResource Foreground.Color}" />
+
+    <SolidColorBrush x:Key="TabItem.Hover.Background">#FFF8FFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItem.Hover.BorderBrush">#FF7191A3</SolidColorBrush>
+
+    <SolidColorBrush x:Key="TabItem.Selected.Background" Color="{DynamicResource TabControl.Background.Color0}" />
+    <SolidColorBrush x:Key="TabItem.Selected.BorderBrush" Color="{DynamicResource TabControl.Border.Color}" />
+
+    <SolidColorBrush x:Key="TabItem.Disabled.Background">#FFC1C1C1</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItem.Disabled.BorderBrush">#FFADADAD</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItem.Disabled.Foreground" Color="{DynamicResource Foreground.Disabled.Color}" />
 
 
 
@@ -146,9 +182,10 @@
         <GradientStop Offset="1" Color="#FFC2C2C2" />
     </LinearGradientBrush>
     <x:TimeSpan x:Key="Window.CaptionButton.FadeDuration">0:0:0.12</x:TimeSpan>
-    
-    
-    <x:TimeSpan x:Key="Window.OpenClose.TiltDuration">0:0:0.24</x:TimeSpan>
+
+
+    <x:TimeSpan x:Key="Window.Open.Duration">0:0:0.24</x:TimeSpan>
+    <x:TimeSpan x:Key="Window.Close.Duration">0:0:0.24</x:TimeSpan>
     <x:TimeSpan x:Key="Window.MaximizeRestore.ScaleDuration">0:0:0.24</x:TimeSpan>
     <CubicEaseOut x:Key="Window.OpenClose.Easing" />
 </ResourceDictionary>

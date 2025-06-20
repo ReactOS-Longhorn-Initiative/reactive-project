@@ -1,0 +1,129 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctl="using:ReactiveDream.Controls">
+    <ControlTheme x:Key="{x:Type TabItem}"
+                TargetType="{x:Type TabItem}">
+        <Setter Property="Background" Value="{DynamicResource TabItem.Idle.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Idle.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TabItem.Foreground}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="4,1" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DockPanel>
+                    <Rectangle x:Name="Spacer"
+                            Opacity="0"
+                            Focusable="False"
+                            IsTabStop="False"
+                            IsHitTestVisible="False"
+                            Width="2"
+                            Height="2"
+                            DockPanel.Dock="{TemplateBinding TabStripPlacement}" />
+                    <Border x:Name="BG"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <Border.BorderThickness>
+                            <MultiBinding Converter="{x:Static ctl:AdjustThicknessForTabsConverter.Instance}">
+                                <MultiBinding.Bindings>
+                                    <Binding Path="BorderThickness"
+                                            RelativeSource="{RelativeSource Mode=TemplatedParent}"
+                                            Mode="OneWay" />
+                                    <Binding Path="TabStripPlacement"
+                                            RelativeSource="{RelativeSource Mode=TemplatedParent}"
+                                            Mode="OneWay" />
+                                </MultiBinding.Bindings>
+                            </MultiBinding>
+                        </Border.BorderThickness>
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Content="{TemplateBinding Header}"
+                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                        Padding="{TemplateBinding Padding}"
+                                        Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^[TabStripPlacement=Left],
+                        ^[TabStripPlacement=Right]">
+            <Setter Property="Padding" Value="1,4" />
+        </Style>
+
+        <Style Selector="^[TabStripPlacement=Left] /template/ Border#BG">
+            <Setter Property="CornerRadius" Value="2,0,0,2" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Top] /template/ Border#BG">
+            <Setter Property="CornerRadius" Value="2,2,0,0" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Right] /template/ Border#BG">
+            <Setter Property="CornerRadius" Value="0,2,2,0" />
+        </Style>
+        <Style Selector="^[TabStripPlacement=Bottom] /template/ Border#BG">
+            <Setter Property="CornerRadius" Value="0,0,2,2" />
+        </Style>
+
+        
+        <!-- pointerover (hover) state -->
+        <Style Selector="^:pointerover">
+            <Style Selector="^ /template/ Border#BG">
+                <Setter Property="Background" Value="{DynamicResource TabItem.Hover.Background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Hover.BorderBrush}" />
+            </Style>
+        </Style>
+
+
+        <!-- selected state -->
+        <Style Selector="^:selected">
+            <Style Selector="^[TabStripPlacement=Left]">
+                <Setter Property="Margin" Value="-2,-2,-1,-2" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Top]">
+                <Setter Property="Margin" Value="-2,-2,-2,-1" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Right]">
+                <Setter Property="Margin" Value="-1,-2,-2,-2" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Bottom]">
+                <Setter Property="Margin" Value="-2,-1,-2,-2" />
+            </Style>
+
+            <Setter Property="ZIndex" Value="1337" />
+
+
+            <Style Selector="^ /template/ Border#BG">
+                <Setter Property="Background" Value="{DynamicResource TabItem.Selected.Background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Selected.BorderBrush}" />
+            </Style>
+            
+            <Style Selector="^[TabStripPlacement=Left] /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Margin" Value="0,2,2,2" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Top] /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Margin" Value="2,0,2,2" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Right] /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Margin" Value="2,2,0,2" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Bottom] /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Margin" Value="2,2,2,0" />
+            </Style>
+        </Style>
+
+
+        <!-- disabled state -->
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource TabItem.Disabled.Foreground}" />
+            <Style Selector="^ /template/ Border#BG">
+                <Setter Property="Background" Value="{DynamicResource TabItem.Disabled.Background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Disabled.BorderBrush}" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="TextBlock.Foreground" Value="{DynamicResource TabItem.Disabled.Foreground}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

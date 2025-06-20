@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ctl="using:ReactiveDream.Controls">
-    <ControlTheme x:Key="WindowBase"
-            TargetType="{x:Type ctl:MWindow}">
+    <ControlTheme x:Key="MWindow_BaseTheme"
+            TargetType="{x:Type ctl:MWindowBase}">
         <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Background" Value="#FFDFDFDF" />
         <Setter Property="BorderThickness" Value="0" />
@@ -11,10 +11,11 @@
             <ControlTemplate>
                 <Panel x:Name="SizeRoot">
                     <Panel x:Name="PART_3DRoot">
-                        <ctl:CustomBlurBehind Classes="blurBehind"
-                                            BlurRadius="4"
-                                            CornerRadius="{Binding $parent[Border].CornerRadius, Mode=OneWay}"
-                                            IsVisible="False" />
+                        <ctl:BlurBehindDecorator Classes="blurBehind"
+                                                BlurRadius="{DynamicResource Theme.Blur.Radius}"
+                                                CornerRadius="{Binding $parent[Border].CornerRadius, Mode=OneWay}"
+                                                IsVisible="False"
+                                                IsHitTestVisible="False" />
                         <Border x:Name="FrameRoot"
                                 Background="{DynamicResource Window.Border.BackgroundBrush}"
                                 BorderBrush="{DynamicResource Window.Border.Exterior.OuterBorderBrush}">
@@ -130,6 +131,9 @@
                 </ControlTemplate>
             </Setter>
         </Style>
+        <Style Selector="^[CanResize=False] /template/ Grid#DragResizeEdges">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
         <Style Selector="^ /template/ Grid#DragResizeEdges > Thumb">
             <Setter Property="MinWidth" Value="8" />
             <Setter Property="MinHeight" Value="8" />
@@ -143,23 +147,6 @@
 
 
         <Style Selector="^[IsMaximized=False]">
-            <Setter Property="Margin">
-                <Setter.Value>
-                    <MultiBinding Converter="{x:Static ctl:MWindowLeftTopToMarginConverter.Instance}">
-                        <Binding Path="Left"
-                                RelativeSource="{RelativeSource Mode=Self}"
-                                Mode="OneWay" />
-                        <Binding Path="Top"
-                                RelativeSource="{RelativeSource Mode=Self}"
-                                Mode="OneWay" />
-                    </MultiBinding>
-                </Setter.Value>
-            </Setter>
-            <Style Selector="^ /template/ Panel#SizeRoot">
-                <Setter Property="Width" Value="{Binding WinWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
-                <Setter Property="Height" Value="{Binding WinHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
-            </Style>
-
             <Style Selector="^ /template/ Panel#PART_3DRoot">
                 <Setter Property="Margin" Value="0,0,-16,-40" />
             </Style>
@@ -185,10 +172,6 @@
             </Style>
         </Style>
         <Style Selector="^[IsMaximized=True]">
-            <Setter Property="Width" Value="{Binding $parent[ItemsControl].Bounds.Width, Mode=OneWay}" />
-            <Setter Property="Height" Value="{Binding $parent[ItemsControl].Bounds.Height, Mode=OneWay}" />
-
-
             <Style Selector="^ /template/ Grid#DragResizeEdges">
                 <Setter Property="IsVisible" Value="False" />
             </Style>
@@ -201,10 +184,5 @@
                 <Setter Property="Margin" Value="0,-4,-4,0" />
             </Style>
         </Style>
-        <!--
-        <Style Selector="^ /template/ Panel#TitlebarArea > Panel">
-            <Setter Property="Background" Value="#80FF00FF"/>
-        </Style>
-        -->
     </ControlTheme>
 </ResourceDictionary>

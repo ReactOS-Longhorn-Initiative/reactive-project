@@ -3,7 +3,6 @@
         x:Class="ReactiveDream.Views.RunWindowView">
     <UserControl.Styles>
         <Style Selector=":is(Control)#Footer Button">
-            <Setter Property="Margin" Value="4,0,0,0" />
             <Setter Property="Width" Value="89" />
         </Style>
     </UserControl.Styles>
@@ -15,18 +14,7 @@
                         Height="32"
                         Grid.Column="0"
                         Grid.Row="0" />
-        <!--
-        <Border Width="32"
-                Height="32"
-                Background="#FF000000">
-            <TextBlock Foreground="#FFFFFFFF"
-                    Text="PLACEHOLDER"
-                    FontSize="9"
-                    TextWrapping="Wrap"
-                    Grid.Column="0"
-                    Grid.Row="0" />
-        </Border>
-        -->
+
         <TextBlock Text="Type the name of a program, folder, document, or Internet resource, and ReactOS will open it for you."
                 TextWrapping="Wrap"
                 Grid.Column="2"
@@ -41,16 +29,18 @@
                     Grid.Row="2" />
 
 
-        <UniformGrid x:Name="Footer"
+        <StackPanel x:Name="Footer"
+                    Orientation="Horizontal"
+                    Spacing="2"
                     HorizontalAlignment="Right"
-                    Rows="1"
                     Grid.Column="0"
                     Grid.Row="4"
                     Grid.ColumnSpan="3">
             <Button Content="OK"
                     IsEnabled="False" />
-            <Button Content="Cancel" />
+            <Button Content="Cancel"
+                    Command="{Binding CloseCommand, Mode=OneWay}" />
             <Button Content="Browse..." />
-        </UniformGrid>
+        </StackPanel>
     </Grid>
 </UserControl>

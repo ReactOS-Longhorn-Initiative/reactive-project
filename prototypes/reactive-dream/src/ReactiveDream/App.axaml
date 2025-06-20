@@ -9,7 +9,6 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme />
         <s:ReactiveTheme />
     </Application.Styles>
             
@@ -40,14 +39,5 @@
                 </ControlTemplate>
             </Setter>
         </ControlTheme>
-        <!--
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://ReactiveDream/Styles/Styles.axaml" />
-            </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>
-        -->
-        <StyleInclude x:Key="DWMStyles" Source="avares://ReactiveDream/Styles/DWMStyles.axaml" />
     </Application.Resources>
 </Application>

@@ -6,71 +6,99 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia.VisualTree;
-using IDict_TT = System.Collections.Generic.IDictionary<Avalonia.Size, Avalonia.Media.IImage>;
+using ImageDict = Avalonia.Collections.AvaloniaDictionary<Avalonia.Size, Avalonia.Media.IImage>;
+using ImagePair = System.Collections.Generic.KeyValuePair<Avalonia.Size, Avalonia.Media.IImage>;
 
 namespace ReactiveDream.Controls
 {
+    public enum WallpaperImagePosition
+        : int
+    {
+        Fill = 0,
+        Fit = 1,
+        Stretch = 2,
+        Tile = 3,
+        Center = 4,
+    }
+
+
     public class WallpaperPresenter
         : TemplatedControl
     {
-
         /// <summary>
-        /// Defines the <see cref="WallpaperResolutions"/> property.
+        /// Defines the <see cref="ImagePosition"/> property.
         /// </summary>
-        public static readonly StyledProperty<IDict_TT> WallpaperResolutionsProperty =
-            AvaloniaProperty.Register<WallpaperPresenter, IDict_TT>(nameof(WallpaperResolutions));
+        public static readonly StyledProperty<WallpaperImagePosition> ImagePositionProperty =
+            AvaloniaProperty.Register<WallpaperPresenter, WallpaperImagePosition>(nameof(ImagePosition), WallpaperImagePosition.Fill);
 
         /// <summary>
         /// Other stuff TBD
         /// </summary>
-        public IDict_TT WallpaperResolutions
+        public WallpaperImagePosition ImagePosition
         {
-            get => GetValue(WallpaperResolutionsProperty);
-            set => SetValue(WallpaperResolutionsProperty, value);
+            get => GetValue(ImagePositionProperty);
+            set => SetValue(ImagePositionProperty, value);
         }
+
+
+
+
+        /// <summary>
+        /// Defines the <see cref="ImageResolutions"/> property.
+        /// </summary>
+        public static readonly StyledProperty<ImageDict> ImageResolutionsProperty =
+            AvaloniaProperty.Register<WallpaperPresenter, ImageDict>(nameof(ImageResolutions));
+
+        /// <summary>
+        /// Other stuff TBD
+        /// </summary>
+        public ImageDict ImageResolutions
+        {
+            get => GetValue(ImageResolutionsProperty);
+            set => SetValue(ImageResolutionsProperty, value);
+        }
+
+
+
 
         static WallpaperPresenter()
         {
-            Action<WallpaperPresenter, AvaloniaPropertyChangedEventArgs> onChanged = (sender, e)
-                => sender?.RefreshWallpaperImage();
-            
             AvaloniaProperty[] props =
             {
-                WallpaperResolutionsProperty,
+                ImageResolutionsProperty,
+                ImagePositionProperty,
                 BoundsProperty,
             };
-            
+
+
             AffectsRender<WallpaperPresenter>(props);
             foreach (var prop in props)
             {
-                prop.Changed.AddClassHandler(onChanged);
+                prop.Changed.AddClassHandler<WallpaperPresenter>(WhenAnyAffectsRenderPropertyChanged);
             }
         }
 
-        static void WhenWallpaperResolutionsPropertyChanged(WallpaperPresenter sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            IDict_TT newValue = (e.NewValue != null)
-                ? e.GetNewValue<IDict_TT>()
-                : null
-            ;
-            sender?.RefreshWallpaperImage(); //OnWallpaperResolutionsPropertyChanged(newValue);
-        }
-        
-        Image _img = null;
-        protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
-        {
-            base.OnApplyTemplate(e);
-            _img = e.NameScope.Find<Image>("PART_Image");
-        }
 
-        IImage _renderImage = null;
+        static void WhenAnyAffectsRenderPropertyChanged(WallpaperPresenter sender, AvaloniaPropertyChangedEventArgs e)
+            => sender?.RefreshWallpaperImage();
+
+
+
+
+        IImage _image = null;
         protected void RefreshWallpaperImage()
         {
             if (!this.IsAttachedToVisualTree())
                 return;
             
-            _renderImage = GetImageForSize(Bounds.Size);
+            _image = GetImageForSize(Bounds.Size);
+            if (_img == null)
+                return;
+
+            _img.Source = _image;
+            InvalidateVisual();
         }
+
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
@@ -78,31 +106,117 @@ namespace ReactiveDream.Controls
             RefreshWallpaperImage();
         }
 
+
         public override void Render(DrawingContext context)
         {
             base.Render(context);
+
+
+            var bounds = Bounds;
+            if (ImagePosition != WallpaperImagePosition.Tile)
+            {
+                context.FillRectangle(Background, new(0, 0, bounds.Width, bounds.Height));
+                return;
+            }
+
+
+            Size rgnSize = bounds.Size;
+            Size imgSize = _image.Size;
+
+            double imgWidth = imgSize.Width;
+            double imgHeight = imgSize.Height;
+            Rect src = new(0, 0, imgWidth, imgHeight);
+
+            double xTileCount = Math.Round(rgnSize.Width / imgWidth, MidpointRounding.ToPositiveInfinity);
+            double yTileCount = Math.Round(rgnSize.Height / imgHeight, MidpointRounding.ToPositiveInfinity);
+
+            for (double y = 0; y < yTileCount; y++)
+            {
+                for (double x = 0; x < xTileCount; x++)
+                {
+                    Rect dest = new(imgWidth * x, imgHeight * y, imgWidth, imgHeight);
+                    context.DrawImage(_image, src, dest);
+                }
+            }
         }
 
-        IImage GetImageForSize(Size size)
+
+        Image _img = null;
+        protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
         {
-            var wallRes = WallpaperResolutions;
-            if (wallRes == null)
+            base.OnApplyTemplate(e);
+
+            _img = e.NameScope.Find<Image>("PART_Image");
+            _img.Source = _image;
+        }
+
+
+        IImage GetImageForSize(Size targetSize)
+        {
+            ImageDict imageResolutions = ImageResolutions;
+            if (imageResolutions == null)
                 return null;
-            
-            Dictionary<double, IImage> resDiffs = new();
-            foreach (var pair in wallRes)
+
+
+            IImage ret;
+            var imagePosition = ImagePosition;
+            if ((imagePosition != WallpaperImagePosition.Center) && (imagePosition != WallpaperImagePosition.Tile))
             {
-                Size imgSize = pair.Key;
+                ret = GetImageForSizeCore(imageResolutions, targetSize);
+                if (ret != null)
+                    return ret;
+            }
+
+            ret = GetSmallestImage(imageResolutions);
+
+            return ret;
+        }
+
+
+        static IImage GetSmallestImage(ImageDict imageResolutions)
+        {
+            double smallestSizeW = double.MaxValue;
+            double smallestSizeH = double.MaxValue;
+            double smallestSizeArea = double.MaxValue;
+            IImage smallestImage = null;
+            foreach (ImagePair pair in imageResolutions)
+            {
+                Size size = pair.Key;
+                IImage bmp = pair.Value;
+                double sizeW = size.Width;
+                double sizeH = size.Height;
+                if ((sizeW <= smallestSizeW) && (sizeH <= smallestSizeH))
+                {
+                    double sizeArea = sizeW * sizeH;
+                    if (sizeArea < smallestSizeArea)
+                    {
+                        smallestSizeW = sizeW;
+                        smallestSizeH = sizeH;
+                        smallestSizeArea = sizeArea;
+                        smallestImage = bmp;
+                    }
+                }
+            }
+            return smallestImage;
+        }
+
+
+        static IImage GetImageForSizeCore(ImageDict imageResolutions, Size targetSize)
+        {
+            Dictionary<double, IImage> resDiffs = new();
+            foreach (var pair in imageResolutions)
+            {
+                Size size = pair.Key;
                 
                 double diffAvg = GetAverage(new Size(
-                    Math.Abs(imgSize.Width - size.Width),
-                    Math.Abs(imgSize.Height - size.Height)
+                    Math.Abs(size.Width - targetSize.Width),
+                    Math.Abs(size.Height - targetSize.Height)
                 ));
                 
                 if (resDiffs.TryGetValue(diffAvg, out IImage priorImg))
                 {
                     Size priorSize = priorImg.Size;
-                    if (GetAverage(priorSize) >= GetAverage(imgSize))
+                    if (GetAverage(priorSize) >= GetAverage(size))
                         continue;
                 }
                 

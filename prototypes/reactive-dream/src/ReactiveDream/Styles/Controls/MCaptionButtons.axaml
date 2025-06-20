@@ -3,6 +3,8 @@
                     xmlns:ctl="using:ReactiveDream.Controls">
     <ControlTheme x:Key="ReactiveCaptionButtonBase"
                 TargetType="{x:Type Button}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Background" Value="#00808080" />
         <Setter Property="Foreground" Value="{DynamicResource Window.CaptionButton.Idle.Glyph.BackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Window.CaptionButton.Idle.Glyph.BorderBrush}" />
@@ -66,9 +68,6 @@
                         ^ /template/ Border.bgcolor">
             <Setter Property="Transitions">
                 <Transitions>
-                    <!--
-                    <BrushTransition Property="Background" Duration="{StaticResource Window.CaptionButton.FadeDuration}" />
-                    -->
                     <DoubleTransition Property="Opacity" Duration="{StaticResource Window.CaptionButton.FadeDuration}" />
                 </Transitions>
             </Setter>
@@ -110,7 +109,6 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="MaxHeight" Value="26" />
         <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="UseUniformButtonSizing" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
                 <StackPanel x:Name="LayoutRoot"
@@ -118,7 +116,7 @@
                             Margin="0,6,6,0"
                             Spacing="2"
                             TextElement.FontSize="10"
-                            Classes.noResize="{Binding !CanResize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ctl:MWindow}}, Mode=OneWay}">
+                            Classes.noResize="{Binding !CanResize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ctl:MWindowBase}}, Mode=OneWay}">
                     <Button x:Name="PART_FullScreenButton"
                             Theme="{StaticResource ReactiveCaptionButton}"
                             IsVisible="False"

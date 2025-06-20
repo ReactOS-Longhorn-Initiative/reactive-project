@@ -6,8 +6,8 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel Background="{TemplateBinding Background}">
-                    <ctl:CustomBlurBehind Classes="blurBehind"
-                                        BlurRadius="4" />
+                    <ctl:BlurBehindDecorator Classes="blurBehind"
+                                            BlurRadius="{DynamicResource Theme.Blur.Radius}" />
                     <DockPanel>
                         <Image Source="avares://ReactiveDream/placeholder/taskbar/left.png"
                                 DockPanel.Dock="Left" />

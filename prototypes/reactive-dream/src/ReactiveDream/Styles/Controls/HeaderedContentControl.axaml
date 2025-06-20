@@ -1,0 +1,52 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctl="using:ReactiveDream.Controls">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel Spacing="20">
+                <Button Content="Click Me!" />
+                <Button Classes="accent" Content="Click Me!" />
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type HeaderedContentControl}"
+                TargetType="{x:Type HeaderedContentControl}">
+        <Setter Property="Foreground" Value="{DynamicResource Button.Foreground}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <StackPanel Orientation="Vertical"
+                                Spacing="6"
+                                Margin="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="PART_HeaderPresenter"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        CornerRadius="0"
+                                        Content="{TemplateBinding Header}"
+                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                        RecognizesAccessKey="True"
+                                        HorizontalContentAlignment="Stretch"
+                                        TextBlock.TextAlignment="Left"
+                                        VerticalContentAlignment="Center" />
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                        Background="Transparent"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="0"
+                                        CornerRadius="0"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        RecognizesAccessKey="True"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </StackPanel>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

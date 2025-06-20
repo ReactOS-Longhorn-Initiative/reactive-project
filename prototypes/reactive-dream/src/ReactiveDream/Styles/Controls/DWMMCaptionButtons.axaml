@@ -6,11 +6,6 @@
     <ControlTheme x:Key="ReactiveCaptionButtonBase"
                 TargetType="{x:Type Button}">
         <Setter Property="Background" Value="#00808080" />
-        <!-- Reusing BorderBrush to define pressed background color, as it's not used otherwise -->
-        <!--
-        <Setter Property="BorderBrush" Value="{DynamicResource Window.CaptionButton.Hover.BackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource Window.CaptionButton.Pressed.BackgroundBrush}"/>
-        -->
         <Setter Property="Foreground" Value="{DynamicResource Window.CaptionButton.Idle.Glyph.BackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Window.CaptionButton.Idle.Glyph.BorderBrush}" />
         <Setter Property="Width" Value="42"/>
@@ -47,69 +42,6 @@
             </ControlTemplate>
         </Setter>
 
-        <!--
-        <Style Selector="StackPanel > ^:last-child /template/ Rectangle.separator">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
-        -->
-
-        <!--
-        <Style Selector="^ /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1" />
-        </Style>
-        <Style Selector="^:first-child:last-child /template/ Border.edge">
-            <Setter Property="CornerRadius" Value="1" />
-        </Style>
-        <Style Selector="^:not(:last-child) /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1,1,0,1" />
-        </Style>
-        <Style Selector="^:not(:first-child):not(:last-child) /template/ Border.edge">
-            <Setter Property="CornerRadius" Value="0" />
-        </Style>
-        <Style Selector="^:first-child:not(:last-child) /template/ Border.edge">
-            <Setter Property="CornerRadius" Value="1,0,0,1" />
-        </Style>
-        <Style Selector="^:not(:first-child):last-child /template/ Border.edge">
-            <Setter Property="CornerRadius" Value="0,1,1,0" />
-        </Style>
-        -->
-
-        <!--
-        <Style Selector="^:last-child /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1" />
-        </Style>
-        <Style Selector="^:first-child:last-child /template/ Border.edge">
-            <Setter Property="CornerRadius" Value="1" />
-        </Style>
-        <Style Selector="^:not(:first-child):last-child /template/ Border.edge">
-            <Setter Property="CornerRadius" Value="0,1,1,0" />
-        </Style>
-        <Style Selector="^:not(:last-child) /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="0,1,1,1" />
-        </Style>
-        <Style Selector="^:first-child:not(:last-child) /template/ Border.edge">
-            <Setter Property="CornerRadius" Value="0,1,1,0" />
-        </Style>
-        -->
-        <!--
-        <Style Selector="StackPanel:first-child:last-child ^ /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="1" />
-        </Style>
-        <Style Selector="StackPanel:first-child:not(:last-child) ^ /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1,1,0,1" />
-            <Setter Property="CornerRadius" Value="1,0,0,1" />
-        </Style>
-        <Style Selector="StackPanel:not(:first-child):not(:last-child) ^ /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1,1,0,1" />
-            <Setter Property="CornerRadius" Value="0" />
-        </Style>
-        <Style Selector="StackPanel:not(:first-child):last-child ^ /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="0,1,1,0" />
-        </Style>
-        -->
-
 
         <Style Selector="^:not(:last-child)">
             <Setter Property="Margin" Value="0,-10,0,0" />
@@ -127,32 +59,10 @@
         </Style>
 
 
-        <!--
-        <Style Selector="^ /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1" />
-        </Style>
-        <Style Selector="StackPanel > ^:not(:last-child) /template/ Border.edge">
-            <Setter Property="BorderThickness" Value="1,1,0,1" />
-        </Style>
-
-        <Style Selector="StackPanel > ^:first-child /template/ Border.rounded">
-            <Setter Property="CornerRadius" Value="1,0,0,1" />
-        </Style>
-        <Style Selector="StackPanel > ^:last-child /template/ Border.rounded">
-            <Setter Property="CornerRadius" Value="0,1,1,0" />
-        </Style>
-        <Style Selector="StackPanel > ^:first-child:last-child /template/ Border.rounded">
-            <Setter Property="CornerRadius" Value="1" />
-        </Style>
-        -->
-
         <Style Selector="^ /template/ Panel.bg,
                         ^ /template/ Border.bgcolor">
             <Setter Property="Transitions">
                 <Transitions>
-                    <!--
-                    <BrushTransition Property="Background" Duration="{StaticResource Window.CaptionButton.FadeDuration}" />
-                    -->
                     <DoubleTransition Property="Opacity" Duration="{StaticResource Window.CaptionButton.FadeDuration}" />
                 </Transitions>
             </Setter>
@@ -206,7 +116,6 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="MaxHeight" Value="28" />
         <Setter Property="ClipToBounds" Value="False" />
-        <Setter Property="UseUniformButtonSizing" Value="False"/>
         <Setter Property="Template">
             <ControlTemplate>
                 <Border x:Name="LayoutRoot"
@@ -214,7 +123,7 @@
                         BorderThickness="1"
                         CornerRadius="2"
                         Margin="0,6,6,0"
-                        Classes.noResize="{Binding !CanResize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ctl:MWindow}}, Mode=OneWay}">
+                        Classes.noResize="{Binding !CanResize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ctl:MWindowBase}}, Mode=OneWay}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{DynamicResource Window.Border.Interior.InnerBorderBrush}"
                             BorderThickness="1"
@@ -238,13 +147,6 @@
                                     Theme="{StaticResource ReactiveCaptionButton}"
                                     AutomationProperties.Name="Minimize"
                                     Classes="hide-when-no-resize">
-                                <!--
-                                <Viewbox Width="11" Margin="2">
-                                    <Path Stretch="UniformToFill"
-                                        Fill="{TemplateBinding Foreground}"
-                                        Data="M2048 1229v-205h-2048v205h2048z" />
-                                </Viewbox>
-                                -->
                                 <Panel>
                                     <Path Classes="stroke"
                                         Data="{Binding #MinIcon.Data}" />
@@ -256,17 +158,6 @@
                                     Theme="{StaticResource ReactiveCaptionButton}"
                                     AutomationProperties.Name="Maximize"
                                     Classes="hide-when-no-resize">
-                                <!--
-                                <Viewbox Width="11" Margin="2">
-                                    <Viewbox.RenderTransform>
-                                        <RotateTransform Angle="-90" />
-                                    </Viewbox.RenderTransform>
-                                    <Path X:Name="RestoreButtonPath"
-                                        Stretch="UniformToFill"
-                                        Fill="{TemplateBinding Foreground}"
-                                        Data="M2048 2048v-2048h-2048v2048h2048zM1843 1843h-1638v-1638h1638v1638z"/>
-                                </Viewbox>
-                                -->
                                 <Panel>
                                     <Path Classes="stroke"
                                         Data="{Binding #MaxIcon.Data}" />
@@ -278,17 +169,6 @@
                             <Button x:Name="PART_CloseButton"
                                     Theme="{StaticResource ReactiveCloseButton}"
                                     AutomationProperties.Name="Close">
-                            <!--
-                                Background="#ffe81123"
-                                BorderBrush="#fff1707a"
-                            -->
-                                <!--
-                                <Viewbox Width="11" Margin="2">
-                                    <Path Stretch="UniformToFill"
-                                        Fill="{TemplateBinding Foreground}"
-                                        Data="M1169 1024l879 -879l-145 -145l-879 879l-879 -879l-145 145l879 879l-879 879l145 145l879 -879l879 879l145 -145z" />
-                                </Viewbox>
-                                -->
                                 <Panel>
                                     <Path Classes="stroke"
                                         Data="{Binding #CloseIcon.Data}" />
@@ -308,10 +188,6 @@
         <Style Selector="^ /template/ Button > Panel">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <!--
-            <Setter Property="Width" Value="10" />
-            <Setter Property="Height" Value="10" />
-            -->
         </Style>
         <Style Selector="^ /template/ Button Path.stroke">
             <Setter Property="StrokeThickness" Value="2" />
@@ -320,24 +196,6 @@
         <Style Selector="^ /template/ Button Path:not(.stroke)">
             <Setter Property="Fill" Value="{Binding $parent[Button].Foreground}" />
         </Style>
-        <!--
-        <Style Selector="^:maximized /template/ Path#RestoreButtonPath">
-            <Setter Property="Data" Value="M2048 410h-410v-410h-1638v1638h410v410h1638v-1638zM1434 1434h-1229v-1229h1229v1229zM1843 1843h-1229v-205h1024v-1024h205v1229z" />
-        </Style>
-        <Style Selector="^:fullscreen /template/ Path#FullScreenButtonPath">
-            <Setter Property="IsVisible" Value="True" />
-            <Setter Property="Data" Value="M205 1024h819v-819h-205v469l-674 -674l-145 145l674 674h-469v205zM1374 1229h469v-205h-819v819h205v-469l674 674l145 -145z" />
-        </Style>
-        <Style Selector="^:fullscreen /template/ Button#PART_RestoreButton">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
-        <Style Selector="^:fullscreen /template/ Button#PART_MinimizeButton">
-            <Setter Property="IsVisible" Value="False" />
-        </Style>
-        <Style Selector="^ /template/ Button#PART_RestoreButton:disabled">
-            <Setter Property="Opacity" Value="0.2"/>
-        </Style>
-        -->
         <Style Selector="^ /template/ Border#LayoutRoot.noResize Button.hide-when-no-resize">
             <Setter Property="IsVisible" Value="False" />
         </Style>

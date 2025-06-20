@@ -1,12 +1,11 @@
 using System;
-using System.Diagnostics;
-using System.IO;
+using System.ComponentModel;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
+using ReactiveDream.Styles;
 using ReactiveDream.ViewModels;
 using ReactiveDream.Views;
 
@@ -33,88 +32,51 @@ namespace ReactiveDream
             protected set => _mainVM = value;
         }
 
-        const string _DWM_INCLUDE_KEY = "DWMStyles";
-        IStyle _dwmInclude = null;
+
+        ReactiveTheme _theme = null;
         public override void OnFrameworkInitializationCompleted()
         {
-            string sourceThemesDir = string.Empty;
-
-            MainVM = new MainViewModel();
+            _theme = Styles.OfType<ReactiveTheme>().First();
+            _theme.IsCompositionActive = true;
 
             
-            /*ResourceInclude dwmInclude = 
-                /*new ResourceInclude()
-                {
-                    Source = new Uri("avares://ReactiveDream/Styles/DWMStyles.axaml", UriKind.RelativeOrAbsolute)
-                }* /
-                (IStyle)Resources[_DWM_INCLUDE_KEY]!
-            ;*/
-            if (Resources.TryGetValue(_DWM_INCLUDE_KEY, out object dwmIncludeO) && (dwmIncludeO is IStyle dwmInclude))
-            {
-                _dwmInclude = dwmInclude;
-                Resources.Remove(_DWM_INCLUDE_KEY);
-                
-                MainVM.PropertyChanged += (s, e) =>
-                {
-                    Debug.WriteLine("MainVM.PropertyChanged");
+            MainVM = new MainViewModel();
+            MainVM.PropertyChanged += MainVM_PropertyChanged;
 
-                    if (e.PropertyName != nameof(MainViewModel.IsCompositionActive))
-                        return;
 
-                    MainVM.RefreshHackPrepare();
-                    DwmEnableComposition(MainVM.IsCompositionActive);
-                    MainVM.RefreshHackConclude();
-                };
-            }
-            DwmEnableComposition(MainVM.IsCompositionActive);
+            _theme.IsCompositionActive = MainVM.IsCompositionActive;
             MainView = new()
             {
                 DataContext = MainVM,
             };
-            
+
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
+                MainVM.SetFullScreenCapability(true);
+                desktop.MainWindow = new MainWindow()
                 {
                     Content = MainView,
                     [!DataContextProperty] = MainView[!DataContextProperty]
                 };
             }
+			else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewLifetime)
+			{
+                MainVM.SetFullScreenCapability(false);
+				singleViewLifetime.MainView = MainView;
+			}
 
             base.OnFrameworkInitializationCompleted();
         }
 
-        void DwmEnableComposition(bool enable)
+        void MainVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            /*if (_dwmInclude == null)
-                return;*/
-            //MainView?.UprootHack();
-
-            bool areDwmStylesMerged = Styles.Contains(_dwmInclude); //Resources.MergedDictionaries.Contains(_dwmInclude);
-            if (enable == areDwmStylesMerged)
+            if (e.PropertyName != nameof(MainViewModel.IsCompositionActive))
                 return;
-            
-            
-            var prevStyles = Styles.Where(x => x != _dwmInclude).ToList();
-            int styleCount = prevStyles.Count;
-            //foreach (var style in styles)
-            /*for (int i = 0; i < styleCount; i++)
-            {
-                Styles.RemoveAt(0);
-            }*/
 
-            if (enable)
-                Styles.Add(_dwmInclude); //Resources.MergedDictionaries.Add(_dwmInclude);
-            else
-                Styles.Remove(_dwmInclude); //Resources.MergedDictionaries.Remove(_dwmInclude);
-            
-            
-            /*for (int i = 0; i < styleCount; i++)
-            {
-                Styles.Insert(i, prevStyles[i]);
-            }*/
-            //Styles.Owner
-            //MainView.ReinsertHack();
+            MainVM.RefreshHackPrepare();
+            _theme.IsCompositionActive = MainVM.IsCompositionActive;
+            MainVM.RefreshHackConclude();
         }
     }
 }

@@ -1,0 +1,43 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctl="using:ReactiveDream.Controls">
+    <ControlTheme x:Key="{x:Type ctl:WallpaperPresenter}"
+                TargetType="{x:Type ctl:WallpaperPresenter}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Image x:Name="PART_Image" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ Image#PART_Image">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+
+        <Style Selector="^[ImagePosition=Fill] /template/ Image#PART_Image">
+            <Setter Property="Stretch" Value="UniformToFill" />
+        </Style>
+
+        <Style Selector="^[ImagePosition=Fit] /template/ Image#PART_Image">
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
+
+        <Style Selector="^[ImagePosition=Stretch] /template/ Image#PART_Image">
+            <Setter Property="Stretch" Value="Fill" />
+        </Style>
+
+        <Style Selector="^[ImagePosition=Center] /template/ Image#PART_Image">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Stretch" Value="None" />
+        </Style>
+
+        <Style Selector="^[ImagePosition=Tile] /template/ Image#PART_Image">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

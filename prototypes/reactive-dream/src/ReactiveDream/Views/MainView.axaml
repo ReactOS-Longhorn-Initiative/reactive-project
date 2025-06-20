@@ -1,24 +1,47 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:v="using:ReactiveDream.Views"
-        xmlns:vm="using:ReactiveDream.ViewModels"
-        xmlns:ctl="using:ReactiveDream.Controls"
-        xmlns:local="using:ReactiveDream"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="ReactiveDream.Views.MainView">
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:v="using:ReactiveDream.Views"
+            xmlns:vm="using:ReactiveDream.ViewModels"
+            xmlns:ctl="using:ReactiveDream.Controls"
+            xmlns:local="using:ReactiveDream"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            x:Class="ReactiveDream.Views.MainView">
     <UserControl.Resources>
         <local:ViewLocator x:Key="WindowContentLocator" />
     </UserControl.Resources>
-    <DockPanel>
-        <Panel.Background>
-            <ImageBrush Source="resm:wallpapers/reactive/wallpaper.png/1068x600"
-                        Stretch="UniformToFill" />
-            <!--
-                Source="avares://ReactiveDream/Assets/wallpaper.png"
-            -->
-        </Panel.Background>
+    <UserControl.Styles>
+        <Style Selector="ItemsControl#WindowsRoot ctl|MWindow[IsMaximized=False]">
+            <Setter Property="Margin">
+                <Setter.Value>
+                    <MultiBinding Converter="{x:Static ctl:MWindowLeftTopToMarginConverter.Instance}">
+                        <Binding Path="Left"
+                                RelativeSource="{RelativeSource Mode=Self}"
+                                Mode="OneWay" />
+                        <Binding Path="Top"
+                                RelativeSource="{RelativeSource Mode=Self}"
+                                Mode="OneWay" />
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector="ItemsControl#WindowsRoot ctl|MWindow[IsMaximized=False] /template/ Panel#SizeRoot">
+            <Setter Property="Width" Value="{Binding WinWidth, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+            <Setter Property="Height" Value="{Binding WinHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" />
+        </Style>
+        <Style Selector="ItemsControl#WindowsRoot ctl|MWindow[IsMaximized=True]">
+            <Setter Property="Width" Value="{Binding $parent[ItemsControl].Bounds.Width, Mode=OneWay}" />
+            <Setter Property="Height" Value="{Binding $parent[ItemsControl].Bounds.Height, Mode=OneWay}" />
+        </Style>
+    </UserControl.Styles>
+    <Panel>
+        <ctl:WallpaperPresenter x:Name="Wallpaper"
+                                ImageResolutions="{Binding Wallpaper, Converter={x:Static ctl:WallpaperViewModelToImageResolutionsConverter.Instance}, Mode=OneWay}"
+                                ImagePosition="{Binding WallpaperPosition, Mode=OneWay}"
+                                Background="{DynamicResource Theme.Wallpaper.Color.Brush}" />
+
+        <DockPanel>
             <Panel x:Name="Taskbar"
                     DockPanel.Dock="Bottom"
                     ZIndex="99999999"
@@ -33,16 +56,6 @@
                                         IsTabStop="False"
                                         Focusable="False"
                                         IsVisible="{Binding $parent[ContentControl].IsPointerOver, Mode=OneWay}" />
-                        <!--
-                        <Border Background="#80000000"
-                                IsHitTestVisible="False"
-                                IsTabStop="False"
-                                Focusable="False"
-                                IsVisible="{Binding $parent[ContentControl].IsPointerOver, Mode=OneWay}">
-                            <TextBlock Foreground="#FFFFFFFF"
-                                    Text="Taskbar not yet interactive" />
-                        </Border>
-                        -->
                 </ContentControl>
             </Panel>
             <Panel>
@@ -54,20 +67,6 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.Styles>
-                        <!--
-                        <Style Selector="Button.desktop-icon:not(:pointerover):not(:pressed) /template/ Border">
-                            <Setter Property="IsVisible" Value="False" />
-                        </Style>
-                        -->
-                        <!--
-                        <Style Selector="Button.desktop-icon:not(:pointerover):not(:pressed)">
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="BorderBrush" Value="Transparent" />
-                        </Style>
-                        <Style Selector="Button.desktop-icon:not(:pointerover):not(:pressed) /template/ Border#Inner">
-                            <Setter Property="IsVisible" Value="False" />
-                        </Style>
-                        -->
                         <Style Selector="Button.desktop-icon">
                             <Setter Property="Background" Value="Transparent" />
                             <Setter Property="Foreground" Value="#FFFFFFFF" />
@@ -120,16 +119,8 @@
                                         IsActive="{Binding IsActive, Mode=TwoWay}"
                                         IsMaximized="{Binding IsMaximized, Mode=TwoWay}"
                                         CanResize="{Binding CanResize, Mode=OneWay}"
-                                        CloseCommand="{Binding Close, Mode=OneWay}"
-                                        ActivateCommand="{Binding Activate, Mode=OneWay}">
-                                <!--
-                                <ctl:MWindow.ContentTemplate>
-                                </ctl:MWindow.ContentTemplate>
-                                -->
-                            </ctl:MWindow>
-                            <!--
-                                        AnimationState="{Binding IsOpened, Converter={x:Static ctl:MWindowAnimationStateToIsOpenedBooleanConverter.Instance}, Mode=TwoWay}"
-                            -->
+                                        CloseCommand="{Binding CloseCommand, Mode=OneWay}"
+                                        ActivateCommand="{Binding Activate, Mode=OneWay}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     <ItemsControl.ItemsPanel>
@@ -138,19 +129,17 @@
                                 PointerPressed="Windows_PointerPressed"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch" />
-                                <!--
-                                AttachedToVisualTree="Windows_PanelAttachedToVisualTree"
-                                -->
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
-            <TextBlock Text="MOCKUP"
-                    FontFamily="Ubuntu"
-                    FontSize="64"
-                    Foreground="#80000000"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    IsHitTestVisible="False" />
+                <TextBlock Text="MOCKUP"
+                        FontFamily="Ubuntu"
+                        FontSize="64"
+                        Foreground="#80000000"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsHitTestVisible="False" />
             </Panel>
-    </DockPanel>
+        </DockPanel>
+    </Panel>
 </UserControl>

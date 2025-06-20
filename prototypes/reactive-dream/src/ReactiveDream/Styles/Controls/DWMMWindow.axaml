@@ -1,9 +1,9 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ctl="using:ReactiveDream.Controls">
-    <ControlTheme x:Key="{x:Type ctl:MWindow}"
-                TargetType="{x:Type ctl:MWindow}"
-                BasedOn="{StaticResource WindowBase}">
+    <ControlTheme x:Key="{x:Type ctl:MWindowBase}"
+                TargetType="{x:Type ctl:MWindowBase}"
+                BasedOn="{StaticResource MWindow_BaseTheme}">
         <Setter Property="BorderBrush" Value="{DynamicResource Theme.Color.Brush}" />
         <Setter Property="RenderTransform" Value="scale(1)" />
 
@@ -24,38 +24,49 @@
         </Style>
         <Style Selector="^[AnimationState=Opening]">
             <Style.Animations>
-                <Animation Duration="{StaticResource Window.OpenClose.TiltDuration}"
-                        Easing="{StaticResource Window.OpenClose.Easing}"
+                <Animation Duration="{StaticResource Window.Open.Duration}"
                         FillMode="Forward">
                     <KeyFrame Cue="0%">
                         <Setter Property="Opacity" Value="0" />
-                        
-                        <Setter Property="ScaleTransform.ScaleX" Value="0.64" />
-                        <Setter Property="ScaleTransform.ScaleY" Value="0.64" />
-                        
-                        <Setter Property="TransformAngleX" Value="-8" />
-                        <Setter Property="TransformAngleY" Value="-1" />
-                        <Setter Property="TransformAngleZ" Value="-2" />
                     </KeyFrame>
                     <KeyFrame Cue="100%">
                         <Setter Property="Opacity" Value="1" />
-                        
+                    </KeyFrame>
+                </Animation>
+                <Animation Duration="{StaticResource Window.Open.Duration}"
+                        Easing="{StaticResource Window.OpenClose.Easing}"
+                        FillMode="Forward">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="ScaleTransform.ScaleX" Value="0.64" />
+                        <Setter Property="ScaleTransform.ScaleY" Value="0.64" />
+
+                        <Setter Property="TransformAngleX" Value="-24" />
+                        <!--
+                        <Setter Property="TransformAngleX" Value="-8" />
+                        <Setter Property="TransformAngleY" Value="-1" />
+                        <Setter Property="TransformAngleZ" Value="-2" />
+                        -->
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
                         <Setter Property="ScaleTransform.ScaleX" Value="1" />
                         <Setter Property="ScaleTransform.ScaleY" Value="1" />
 
                         <Setter Property="TransformAngleX" Value="0" />
                         <Setter Property="TransformAngleY" Value="0" />
                         <Setter Property="TransformAngleZ" Value="0" />
-                        <!--
-                        <Setter Property="IsOpened" Value="True" />
-                        -->
                     </KeyFrame>
                 </Animation>
             </Style.Animations>
         </Style>
         <Style Selector="^[AnimationState=Closing]">
             <Style.Animations>
-                <Animation Duration="{StaticResource Window.OpenClose.TiltDuration}"
+                <Animation Duration="{StaticResource Window.Close.Duration}"
+                        FillMode="Both">
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0" />
+                    </KeyFrame>
+                </Animation>
+                <Animation Duration="{StaticResource Window.Close.Duration}"
                         Easing="{StaticResource Window.OpenClose.Easing}"
                         FillMode="Both">
                     <KeyFrame Cue="0%">
@@ -66,18 +77,23 @@
                         <Setter Property="TransformAngleY" Value="0" />
                         <Setter Property="TransformAngleZ" Value="0" />
                     </KeyFrame>
+                    <KeyFrame Cue="99%">
+                        <Setter Property="IsVisible" Value="True" />
+                    </KeyFrame>
                     <KeyFrame Cue="100%">
                         <Setter Property="Opacity" Value="0" />
                         
                         <Setter Property="ScaleTransform.ScaleX" Value="0.64" />
                         <Setter Property="ScaleTransform.ScaleY" Value="0.64" />
-                        
+
+                        <Setter Property="TransformAngleX" Value="24" />
+                        <!--
                         <Setter Property="TransformAngleX" Value="10" />
                         <Setter Property="TransformAngleY" Value="2" />
                         <Setter Property="TransformAngleZ" Value="4" />
-                        <!--
-                        <Setter Property="IsOpened" Value="False" />
                         -->
+
+                        <Setter Property="IsVisible" Value="False" />
                     </KeyFrame>
                 </Animation>
             </Style.Animations>
@@ -92,7 +108,7 @@
                 <!--
                 <Setter Property="RenderOptions.EdgeMode" Value="Unspecified" />
                 -->
-                <Setter Property="BoxShadow" Value="2.8 4.8 6 #80000000" />
+                <Setter Property="BoxShadow" Value="0 8 12 #80000000" />
             </Style>
         </Style>
         <Style Selector="^[AnimationState=RestoringFromMaximize]">
@@ -126,4 +142,7 @@
             </Style.Animations>
         </Style>
     </ControlTheme>
+    <ControlTheme x:Key="{x:Type ctl:MWindow}"
+                TargetType="{x:Type ctl:MWindow}"
+                BasedOn="{StaticResource {x:Type ctl:MWindowBase}}" />
 </ResourceDictionary>
