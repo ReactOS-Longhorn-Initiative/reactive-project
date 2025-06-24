@@ -1,9 +1,8 @@
 using System;
 using System.Globalization;
-using Avalonia;
 using Avalonia.Data.Converters;
 
-namespace ReactiveDream.Controls
+namespace ReactiveDream.Converters
 {
     public class EnumToIEnumerableConverter
         : IValueConverter

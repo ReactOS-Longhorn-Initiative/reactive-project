@@ -1,54 +1,145 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctl="using:ReactiveDream.Controls">
-    <x:Double x:Key="MenuBarHeight">19</x:Double>
-
-    <ControlTheme x:Key="ReactiveTopLevelMenuItem"
-                TargetType="MenuItem">
-        <Setter Property="Padding" Value="6,3" />
+                    xmlns:cnv="using:ReactiveDream.Converters">
+    <ControlTheme x:Key="ReactiveMenuPopupVisual"
+                TargetType="{x:Type ContentControl}">
+        <Setter Property="Background" Value="{DynamicResource Menu.Popup.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Menu.Popup.OuterBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border x:Name="LayoutRoot"
+                <Border x:Name="BG"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
-                    <Panel>
-                        <ContentPresenter x:Name="PART_HeaderPresenter"
-                                        Content="{TemplateBinding Header}"
-                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Stretch"
-                                        RecognizesAccessKey="True"
-                                        Margin="{TemplateBinding Padding}" />
-                        <Popup x:Name="PART_Popup"
-                            WindowManagerAddShadowHint="False"
-                            MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
-                            IsLightDismissEnabled="True"
-                            IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
-                            Placement="BottomEdgeAlignedLeft"
-                            OverlayInputPassThroughElement="{Binding $parent[Menu]}">
-                            <Border Background="{DynamicResource MenuFlyoutPresenterBackground}"
-                                    BorderBrush="{DynamicResource MenuFlyoutPresenterBorderBrush}"
-                                    BorderThickness="{DynamicResource MenuFlyoutPresenterBorderThemeThickness}"
-                                    Padding="{DynamicResource MenuFlyoutPresenterThemePadding}"
-                                    MaxWidth="{DynamicResource FlyoutThemeMaxWidth}"
-                                    MinHeight="{DynamicResource MenuFlyoutThemeMinHeight}"
-                                    HorizontalAlignment="Stretch"
-                                    CornerRadius="{DynamicResource OverlayCornerRadius}">
-                                <ScrollViewer Theme="{StaticResource FluentMenuScrollViewer}">
-                                    <ItemsPresenter x:Name="PART_ItemsPresenter"
-                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                    Margin="{DynamicResource MenuFlyoutScrollerMargin}"
-                                                    Grid.IsSharedSizeScope="True" />
-                                </ScrollViewer>
-                            </Border>
-                        </Popup>
-                    </Panel>
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        HorizontalAlignment="Stretch"
+                        Margin="0,0,2,2"
+                        BoxShadow="2 2 2 #80000000">
+                    <Border BorderBrush="{DynamicResource Menu.Popup.InnerBorderBrush}"
+                            BorderThickness="1">
+                        <Panel>
+                            <Separator Theme="{DynamicResource VerticalSeparator}"
+                                    Margin="27,0,0,0"
+                                    HorizontalAlignment="Left" />
+                            <!--
+                            <Rectangle Width="3"
+                                    Fill="{DynamicResource Menu.Popup.InnerBorderBrush}"
+                                    HorizontalAlignment="Left"
+                                    Height="{Binding Bounds.Height, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
+                                    Margin="-9,0,0,0" />
+                            <Rectangle Width="1"
+                                    Fill="{DynamicResource Menu.Popup.OuterBorderBrush}"
+                                    HorizontalAlignment="Left"
+                                    Height="{Binding Bounds.Height, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
+                                    Margin="-8,0,0,0" />
+                            -->
+                            <ContentPresenter x:Name="PART_ContentPresenter"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <!--
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
+                            -->
+                            <!--
+                            <ScrollViewer Theme="{StaticResource FluentMenuScrollViewer}">
+                                <ItemsPresenter x:Name="PART_ItemsPresenter"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                Grid.IsSharedSizeScope="True" />
+                            </ScrollViewer>
+                            -->
+                        </Panel>
+                    </Border>
                 </Border>
             </ControlTemplate>
         </Setter>
+        <Style Selector="^ /template/ Border#PopupBG">
+            <!--
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="1" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="BoxShadow" Value="2 2 2 #80000000" />
+            <Setter Property="Margin" Value="0,0,2,2" />
+            -->
+        </Style>
+    </ControlTheme>
 
+
+    <ControlTheme x:Key="ReactiveTopLevelMenuItem"
+                TargetType="{x:Type MenuItem}"
+                BasedOn="{StaticResource {x:Type MenuItem}}">
+        <Setter Property="BorderBrush" Value="{DynamicResource Menu.Bar.BorderBrush}" />
+        <Setter Property="Padding" Value="6,0" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <!--
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        -->
+        <Setter Property="ItemsPanel" Value="{DynamicResource ReactiveMenuItemsPanelTemplate}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel x:Name="PART_LayoutRoot"
+                    Background="#01000000">
+                    <Border x:Name="BG"
+                            Margin="1"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+                    <ContentPresenter x:Name="PART_HeaderPresenter"
+                                    Content="{TemplateBinding Header}"
+                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Center"
+                                    RecognizesAccessKey="True"
+                                    Padding="{TemplateBinding Padding}" />
+                    <Popup x:Name="PART_Popup"
+                        WindowManagerAddShadowHint="True"
+                        MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                        IsLightDismissEnabled="True"
+                        IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
+                        Placement="BottomEdgeAlignedLeft"
+                        OverlayInputPassThroughElement="{Binding $parent[Menu]}"
+                        ClipToBounds="False">
+                        <ContentControl x:Name="PopupFrame"
+                                        Theme="{DynamicResource ReactiveMenuPopupVisual}">
+                            <ScrollViewer Theme="{StaticResource FluentMenuScrollViewer}">
+                                <ItemsPresenter x:Name="PART_ItemsPresenter"
+                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                Grid.IsSharedSizeScope="True" />
+                            </ScrollViewer>
+                        </ContentControl>
+                    </Popup>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+
+        <Style Selector="^:open">
+        <!--
+                        ^:selected
+                        ^ /template/ :is(Panel)#PART_LayoutRoot:not(:pointerover),
+        -->
+            <Style Selector="^ /template/ Border#BG">
+                <Setter Property="Background" Value="{DynamicResource Menu.BarItem.Selected.Background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Menu.BarItem.Selected.BorderBrush}" />
+            </Style>
+        </Style>
+
+
+        <!--
         <Style Selector="^:selected">
             <Style Selector="^ /template/ Border#LayoutRoot">
                 <Setter Property="Background" Value="{DynamicResource MenuFlyoutItemBackgroundPointerOver}" />
@@ -58,7 +149,7 @@
             </Style>
         </Style>
 
-        <!--  Listen for LayoutRoot:pointerover, so it will not be triggered when subitem is pressed  -->
+        <!- -  Listen for LayoutRoot:pointerover, so it will not be triggered when subitem is pressed  - ->
         <Style Selector="^:pressed /template/ Border#LayoutRoot:pointerover">
             <Setter Property="Background" Value="{DynamicResource MenuFlyoutItemBackgroundPressed}" />
             <Style Selector="^ ContentPresenter#PART_HeaderPresenter">
@@ -74,26 +165,56 @@
                 <Setter Property="Foreground" Value="{DynamicResource MenuFlyoutItemForegroundDisabled}" />
             </Style>
         </Style>
+        -->
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type Menu}" TargetType="Menu">
-        <Setter Property="Background" Value="#FFFF00FF" />
-        <Setter Property="Height" Value="{DynamicResource MenuBarHeight}" />
+
+    <ControlTheme x:Key="{x:Type Menu}"
+                TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{DynamicResource Menu.Bar.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Menu.Bar.BorderBrush}" />
+        <Setter Property="Height" Value="19" />
         <Setter Property="ItemContainerTheme" Value="{DynamicResource ReactiveTopLevelMenuItem}" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        HorizontalAlignment="Stretch"
-                        Padding="{TemplateBinding Padding}">
-                    <ItemsPresenter x:Name="PART_ItemsPresenter"
-                                    ItemsPanel="{TemplateBinding ItemsPanel}"
-                                    VerticalAlignment="Stretch"
-                                    KeyboardNavigation.TabNavigation="Continue" />
-                </Border>
+                <DockPanel>
+                    <Rectangle x:Name="Trim"
+                            Classes.left="{Binding (DockPanel.Dock), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static cnv:ComparisonConverter.Instance}, ConverterParameter={x:Static Dock.Left}, Mode=OneWay}"
+                            Classes.right="{Binding (DockPanel.Dock), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static cnv:ComparisonConverter.Instance}, ConverterParameter={x:Static Dock.Right}, Mode=OneWay}"
+                            Classes.bottom="{Binding (DockPanel.Dock), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static cnv:ComparisonConverter.Instance}, ConverterParameter={x:Static Dock.Bottom}, Mode=OneWay}"
+                            Fill="{TemplateBinding BorderBrush}"
+                            MinWidth="1"
+                            MinHeight="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" />
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Padding="{TemplateBinding Padding}">
+                        <ItemsPresenter x:Name="PART_ItemsPresenter"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                        VerticalAlignment="Stretch"
+                                        KeyboardNavigation.TabNavigation="Continue" />
+                    </Border>
+                </DockPanel>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^ /template/ Rectangle#Trim:not(.left,.right,.bottom)">
+            <Setter Property="DockPanel.Dock" Value="Bottom" />
+        </Style>
+        <Style Selector="^ /template/ Rectangle#Trim.left">
+            <Setter Property="DockPanel.Dock" Value="Right" />
+        </Style>
+        <Style Selector="^ /template/ Rectangle#Trim.right">
+            <Setter Property="DockPanel.Dock" Value="Left" />
+        </Style>
+        <Style Selector="^ /template/ Rectangle#Trim.bottom">
+            <Setter Property="DockPanel.Dock" Value="Top" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

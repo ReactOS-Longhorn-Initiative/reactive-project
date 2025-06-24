@@ -12,6 +12,7 @@ namespace ReactiveDream.ViewModels
             set => RASIC(ref _name, value);
         }
 
+
         Action _command = null;
         public Action Command
         {
@@ -19,17 +20,27 @@ namespace ReactiveDream.ViewModels
             set => RASIC(ref _command, value);
         }
 
+
         public DesktopIconViewModel()
             : base()
-        {
-        }
+        {}
         public DesktopIconViewModel(string name)
             : this()
         {
             Name = name;
         }
 
+
         public void ExecuteCommand()
-            => Command?.Invoke();
+            => ExecuteCommandCore();
+        protected virtual bool ExecuteCommandCore()
+        {
+            var command = Command;
+            if (command == null)
+                return false;
+
+            command();
+            return true;
+        }
     }
 }

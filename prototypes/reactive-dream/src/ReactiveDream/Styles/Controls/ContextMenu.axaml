@@ -1,0 +1,36 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme x:Key="{x:Type ContextMenu}"
+                TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="{DynamicResource Menu.Popup.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Menu.Popup.OuterBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="Focusable" Value="True" />
+        <!--
+        <Setter Property="MaxWidth" Value="{DynamicResource FlyoutThemeMaxWidth}" />
+        <Setter Property="MinHeight" Value="{DynamicResource MenuFlyoutThemeMinHeight}" />
+        <Setter Property="Padding" Value="{DynamicResource MenuFlyoutPresenterThemePadding}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        -->
+        <Setter Property="WindowManagerAddShadowHint" Value="False" />
+        <Setter Property="ItemsPanel" Value="{DynamicResource ReactiveMenuItemsPanelTemplate}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentControl x:Name="PopupFrame"
+                                Theme="{DynamicResource ReactiveMenuPopupVisual}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                    <ScrollViewer Theme="{StaticResource FluentMenuScrollViewer}">
+                        <ItemsPresenter x:Name="PART_ItemsPresenter"
+                                        ItemsPanel="{TemplateBinding ItemsPanel}"
+                                        KeyboardNavigation.TabNavigation="Continue"
+                                        Grid.IsSharedSizeScope="True" />
+                    </ScrollViewer>
+                </ContentControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

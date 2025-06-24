@@ -61,8 +61,16 @@
         <Style Selector="^[AnimationState=Closing]">
             <Style.Animations>
                 <Animation Duration="{StaticResource Window.Close.Duration}"
-                        FillMode="Both">
+                        FillMode="Forward">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="IsVisible" Value="True" />
+                        <Setter Property="Opacity" Value="1" />
+                    </KeyFrame>
+                    <KeyFrame Cue="99%">
+                        <Setter Property="IsVisible" Value="True" />
+                    </KeyFrame>
                     <KeyFrame Cue="100%">
+                        <Setter Property="IsVisible" Value="False" />
                         <Setter Property="Opacity" Value="0" />
                     </KeyFrame>
                 </Animation>
@@ -74,15 +82,12 @@
                         <Setter Property="ScaleTransform.ScaleY" Value="1" />
 
                         <Setter Property="TransformAngleX" Value="0" />
+                        <!--
                         <Setter Property="TransformAngleY" Value="0" />
                         <Setter Property="TransformAngleZ" Value="0" />
-                    </KeyFrame>
-                    <KeyFrame Cue="99%">
-                        <Setter Property="IsVisible" Value="True" />
+                        -->
                     </KeyFrame>
                     <KeyFrame Cue="100%">
-                        <Setter Property="Opacity" Value="0" />
-                        
                         <Setter Property="ScaleTransform.ScaleX" Value="0.64" />
                         <Setter Property="ScaleTransform.ScaleY" Value="0.64" />
 
@@ -92,8 +97,6 @@
                         <Setter Property="TransformAngleY" Value="2" />
                         <Setter Property="TransformAngleZ" Value="4" />
                         -->
-
-                        <Setter Property="IsVisible" Value="False" />
                     </KeyFrame>
                 </Animation>
             </Style.Animations>

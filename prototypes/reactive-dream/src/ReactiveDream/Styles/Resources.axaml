@@ -4,7 +4,7 @@
     <x:Double x:Key="ControlContentThemeFontSize">11</x:Double>
 
     <Color x:Key="Foreground.Color">#FF000000</Color>
-    <Color x:Key="Foreground.Disabled.Color">#FF606060</Color>
+    <Color x:Key="Foreground.Disabled.Color">#FF808080</Color>
 
     <x:Double x:Key="Theme.Blur.Radius">4</x:Double>
 
@@ -77,6 +77,50 @@
     </RadialGradientBrush>
     <SolidColorBrush x:Key="Button.Foreground" Color="{DynamicResource Foreground.Color}" />
     <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="{DynamicResource Foreground.Disabled.Color}" />
+
+
+
+
+    <LinearGradientBrush x:Key="Menu.Bar.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#FFF6F6F6" />
+        <GradientStop Offset="0.5" Color="#FFE6ECEE" />
+        <GradientStop Offset="0.5" Color="#FFDFE7EA" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Menu.Bar.BorderBrush">#FFBBBEBF</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="Menu.Popup.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="100%,0%">
+        <GradientStop Offset="0" Color="#FFE9EBEC" />
+        <GradientStop Offset="1" Color="#FFE2E6E8" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="Menu.Popup.OuterBorderBrush">#FFBBBEBF</SolidColorBrush>
+    <SolidColorBrush x:Key="Menu.Popup.InnerBorderBrush">#FFEDEEEF</SolidColorBrush>
+
+
+    <SolidColorBrush x:Key="Menu.BarItem.Selected.BorderBrush">#FF9DA7B5</SolidColorBrush>
+    <LinearGradientBrush x:Key="Menu.BarItem.Selected.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#809DA7B5" />
+        <GradientStop Offset="1" Color="#009DA7B5" />
+    </LinearGradientBrush>
+
+
+
+
+    <LinearGradientBrush x:Key="MenuItem.Hover.Background"
+                        StartPoint="0%,0%"
+                        EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="#00CEEBED" />
+        <GradientStop Offset="1" Color="#80CEEBED" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="MenuItem.Hover.BorderBrush">#FFB3CCCE</SolidColorBrush>
+    <SolidColorBrush x:Key="MenuItem.Hover.Foreground" Color="{DynamicResource Foreground.Color}" />
+
+    <SolidColorBrush x:Key="MenuItem.Disabled.Foreground" Color="{DynamicResource Foreground.Disabled.Color}" />
 
 
 

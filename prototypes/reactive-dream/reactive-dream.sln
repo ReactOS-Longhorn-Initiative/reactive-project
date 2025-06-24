@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveDream", "src\ReactiveDream\ReactiveDream.csproj", "{A6C8D724-06CC-4448-8B38-524F558B9399}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveDream", "src\ReactiveDream\ReactiveDream.net5-0.csproj", "{A6C8D724-06CC-4448-8B38-524F558B9399}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{14BA19AC-B8C5-433A-8C0A-A5C0E8BAB664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveDream.Desktop", "src\ReactiveDream.Desktop\ReactiveDream.Desktop.csproj", "{10ED59D5-D1AA-4C79-9D46-42D28AD34D89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveDream.Browser", "src\ReactiveDream.Browser\ReactiveDream.Browser.csproj", "{4C932AA4-CCD2-4C8A-8F45-64C3E9D8BF8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +21,23 @@ Global
 		{A6C8D724-06CC-4448-8B38-524F558B9399}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6C8D724-06CC-4448-8B38-524F558B9399}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6C8D724-06CC-4448-8B38-524F558B9399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10ED59D5-D1AA-4C79-9D46-42D28AD34D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10ED59D5-D1AA-4C79-9D46-42D28AD34D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10ED59D5-D1AA-4C79-9D46-42D28AD34D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10ED59D5-D1AA-4C79-9D46-42D28AD34D89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C932AA4-CCD2-4C8A-8F45-64C3E9D8BF8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C932AA4-CCD2-4C8A-8F45-64C3E9D8BF8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C932AA4-CCD2-4C8A-8F45-64C3E9D8BF8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C932AA4-CCD2-4C8A-8F45-64C3E9D8BF8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED1BBB95-386D-4DB9-9CD4-F7923129D230}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{10ED59D5-D1AA-4C79-9D46-42D28AD34D89} = {14BA19AC-B8C5-433A-8C0A-A5C0E8BAB664}
+		{4C932AA4-CCD2-4C8A-8F45-64C3E9D8BF8A} = {14BA19AC-B8C5-433A-8C0A-A5C0E8BAB664}
 	EndGlobalSection
 EndGlobal

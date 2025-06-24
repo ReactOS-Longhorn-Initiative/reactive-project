@@ -5,7 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
 
-namespace ReactiveDream.Controls
+namespace ReactiveDream.Converters
 {
     public class AdjustThicknessForTabsConverter
         : IMultiValueConverter

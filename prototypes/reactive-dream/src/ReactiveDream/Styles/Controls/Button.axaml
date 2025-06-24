@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctl="using:ReactiveDream.Controls">
+                    xmlns:cnv="using:ReactiveDream.Converters">
     <Design.PreviewWith>
         <Border Padding="20">
             <StackPanel Spacing="20">
@@ -20,10 +20,8 @@
         <Setter Property="Padding" Value="4" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
@@ -37,7 +35,7 @@
                             Background="{DynamicResource Button.TopShine}"
                             BorderBrush="{DynamicResource Button.InnerBorderBrush}"
                             BorderThickness="1"
-                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={x:Static ctl:CornerRadiusAdjustConverter.Instance}, ConverterParameter={StaticResource CornerRadiusMinus1}}">
+                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay, Converter={x:Static cnv:CornerRadiusAdjustConverter.Instance}, ConverterParameter={StaticResource CornerRadiusMinus1}}">
                             <Rectangle Fill="{DynamicResource Button.BottomShine}"
                                     RenderTransformOrigin="50%,100%"
                                     RenderTransform="scale(1,0.75)" />

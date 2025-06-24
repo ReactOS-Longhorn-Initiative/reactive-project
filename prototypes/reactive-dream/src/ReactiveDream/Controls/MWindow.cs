@@ -218,7 +218,9 @@ namespace ReactiveDream.Controls
             if (e.GetNewValue<bool>())
                 return;
 
-            WindowClosed?.Invoke(this, new());
+            EventArgs windowClosedEventArgs = new();
+            Console.WriteLine($"{nameof(WindowClosed)}?.{nameof(EventHandler.Invoke)}('{this}', '{windowClosedEventArgs}');");
+            WindowClosed?.Invoke(this, windowClosedEventArgs);
         }
 
         

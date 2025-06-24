@@ -1,0 +1,63 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme x:Key="Separator_ThemeBase"
+                TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource Menu.Popup.OuterBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Menu.Popup.InnerBorderBrush}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel x:Name="LineStack"
+                            Margin="{TemplateBinding Padding}">
+                    <Rectangle Fill="{TemplateBinding Background}" />
+                    <Rectangle Fill="{TemplateBinding BorderBrush}" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^ /template/ Rectangle">
+            <Setter Property="MinWidth" Value="1" />
+            <Setter Property="MinHeight" Value="1" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+    </ControlTheme>
+
+
+    <ControlTheme x:Key="HorizontalSeparator"
+                TargetType="{x:Type Separator}"
+                BasedOn="{StaticResource Separator_ThemeBase}">
+        <Setter Property="MinHeight" Value="2" />
+        <Setter Property="Margin" Value="0,3" />
+        <Style Selector="^,
+                        ^ /template/ StackPanel#LineStack">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="^ /template/ StackPanel#LineStack">
+            <Setter Property="Orientation" Value="Vertical" />
+        </Style>
+    </ControlTheme>
+
+
+    <ControlTheme x:Key="VerticalSeparator"
+                TargetType="{x:Type Separator}"
+                BasedOn="{StaticResource Separator_ThemeBase}">
+        <Setter Property="MinWidth" Value="2" />
+        <Setter Property="Margin" Value="3,0" />
+        <Style Selector="^,
+                        ^ /template/ StackPanel#LineStack">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="^ /template/ StackPanel#LineStack">
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+    </ControlTheme>
+
+
+    <ControlTheme x:Key="{x:Type Separator}"
+                TargetType="{x:Type Separator}"
+                BasedOn="{StaticResource HorizontalSeparator}" />
+</ResourceDictionary>

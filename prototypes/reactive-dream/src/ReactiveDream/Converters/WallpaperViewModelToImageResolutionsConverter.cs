@@ -5,7 +5,7 @@ using ReactiveDream.ViewModels;
 using InImageDict = System.Collections.Generic.Dictionary<Avalonia.Size, Avalonia.Media.IImage>;
 using OutImageDict = Avalonia.Collections.AvaloniaDictionary<Avalonia.Size, Avalonia.Media.IImage>;
 
-namespace ReactiveDream.Controls
+namespace ReactiveDream.Converters
 {
     public class WallpaperViewModelToImageResolutionsConverter
         : IValueConverter

@@ -3,7 +3,8 @@
              xmlns:local="using:ReactiveDream"
              xmlns:c="using:ReactiveDream.Controls"
              xmlns:s="using:ReactiveDream.Styles"
-             x:Class="ReactiveDream.App">
+             x:Class="ReactiveDream.App"
+             RequestedThemeVariant="Light">
     <Application.DataTemplates>
         <local:ViewLocator />
     </Application.DataTemplates>

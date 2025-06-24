@@ -1,18 +1,40 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="ReactiveDream.Views.NotepadWindowView">
+        x:Class="ReactiveDream.Views.NotepadWindowView"
+        x:Name="Root">
     <DockPanel>
-        <Menu IsEnabled="False"
-            DockPanel.Dock="Top">
-            <MenuItem Header="Menubar NYI" />
-            <MenuItem Header="F_ile" />
-            <MenuItem Header="E_dit" />
-            <MenuItem Header="Fo_rmat" />
-            <MenuItem Header="V_iew" />
-            <MenuItem Header="H_elp" />
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="F_ile">
+                <MenuItem Header="New" />
+                <MenuItem Header="O_pen..." />
+                <MenuItem Header="S_ave" />
+                <MenuItem Header="Save A_s..." />
+            </MenuItem>
+            <MenuItem Header="E_dit"
+                    IsEnabled="False" />
+            <MenuItem Header="Fo_rmat"
+                    IsEnabled="False" />
+            <MenuItem Header="V_iew">
+                <MenuItem x:Name="HideStatusBar"
+                        Header="S_tatus Bar"
+                        Click="HideStatusBar_Click"
+                        IsVisible="{Binding #Root.DataContext.ShowStatusBar, Mode=OneWay}">
+                    <MenuItem.Icon>
+                        <TextBlock Text="&#x2713;"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="S_tatus Bar"
+                        Click="ShowStatusBar_Click"
+                        IsVisible="{Binding !#Root.DataContext.ShowStatusBar, Mode=OneWay}" />
+            </MenuItem>
+            <MenuItem Header="H_elp"
+                    IsEnabled="False" />
         </Menu>
         
         <ContentControl Content="Status bar NYI"
+                        IsVisible="{Binding ShowStatusBar, Mode=OneWay}"
                         Theme="{DynamicResource Placeholder}"
                         Height="23"
                         DockPanel.Dock="Bottom" />

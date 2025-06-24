@@ -3,6 +3,7 @@
             xmlns:v="using:ReactiveDream.Views"
             xmlns:vm="using:ReactiveDream.ViewModels"
             xmlns:ctl="using:ReactiveDream.Controls"
+            xmlns:cnv="using:ReactiveDream.Converters"
             xmlns:local="using:ReactiveDream"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,7 +16,7 @@
         <Style Selector="ItemsControl#WindowsRoot ctl|MWindow[IsMaximized=False]">
             <Setter Property="Margin">
                 <Setter.Value>
-                    <MultiBinding Converter="{x:Static ctl:MWindowLeftTopToMarginConverter.Instance}">
+                    <MultiBinding Converter="{x:Static cnv:MWindowLeftTopToMarginConverter.Instance}">
                         <Binding Path="Left"
                                 RelativeSource="{RelativeSource Mode=Self}"
                                 Mode="OneWay" />
@@ -37,10 +38,10 @@
     </UserControl.Styles>
     <Panel>
         <ctl:WallpaperPresenter x:Name="Wallpaper"
-                                ImageResolutions="{Binding Wallpaper, Converter={x:Static ctl:WallpaperViewModelToImageResolutionsConverter.Instance}, Mode=OneWay}"
+                                DataContext="{Binding DesktopVM, Mode=OneWay}"
+                                ImageResolutions="{Binding Wallpaper, Converter={x:Static cnv:WallpaperViewModelToImageResolutionsConverter.Instance}, Mode=OneWay}"
                                 ImagePosition="{Binding WallpaperPosition, Mode=OneWay}"
                                 Background="{DynamicResource Theme.Wallpaper.Color.Brush}" />
-
         <DockPanel>
             <Panel x:Name="Taskbar"
                     DockPanel.Dock="Bottom"
@@ -57,9 +58,27 @@
                                         Focusable="False"
                                         IsVisible="{Binding $parent[ContentControl].IsPointerOver, Mode=OneWay}" />
                 </ContentControl>
+                <Panel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Toolbars">
+                            <MenuItem Header="Idk" />
+                        </MenuItem>
+                        <MenuItem Header="-" />
+                        <MenuItem Header="Cascade windows" />
+                        <MenuItem Header="Show windows stacked" />
+                        <MenuItem Header="Show windows side by side" />
+                        <MenuItem Header="Show the desktop" />
+                        <MenuItem Header="-" />
+                        <MenuItem Header="Start Task Manager" />
+                        <MenuItem Header="-" />
+                        <MenuItem Header="Lock the taskbar" />
+                        <MenuItem Header="Properties" />
+                    </ContextMenu>
+                </Panel.ContextMenu>
             </Panel>
             <Panel>
                 <ItemsControl x:Name="Desktop"
+                            DataContext="{Binding DesktopVM, Mode=OneWay}"
                             ItemsSource="{Binding DesktopIcons}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -87,7 +106,7 @@
                                     <Border x:Name="IconArea"
                                             Padding="24,8">
                                         <Rectangle Fill="#FFFF00FF"
-                                            Width="{Binding $parent[UserControl].DataContext.DesktopIconSize, Mode=OneWay}"
+                                            Width="{Binding $parent[ItemsControl].DataContext.DesktopIconSize, Mode=OneWay}"
                                             Height="{Binding $self.Bounds.Width, Mode=OneWay}" />
                                     </Border>
                                     <TextBlock Text="{Binding Name, Mode=OneWay}"

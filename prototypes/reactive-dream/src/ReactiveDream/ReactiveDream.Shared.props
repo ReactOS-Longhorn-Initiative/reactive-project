@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../build/Avalonia.props" />
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
-		<OutputType>WinExe</OutputType>
-
+		<AssemblyName>ReactiveDream</AssemblyName>
 		<Nullable>disable</Nullable>
-		<AvVer>11.0.5</AvVer>
-
 		<RosDir>../../reactos</RosDir>
+		<!--
+		<RootNamespace>ReactiveDream</RootNamespace>
+		-->
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,9 +26,7 @@
 		-->
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="$(AvVer)" />
 		<PackageReference Include="Avalonia.Skia" Version="$(AvVer)" />
-		<PackageReference Include="Avalonia.Desktop" Version="$(AvVer)" />
 		<PackageReference Include="Avalonia.Diagnostics" Version="$(AvVer)" />
 		<PackageReference Include="Avalonia.ReactiveUI" Version="$(AvVer)" />
 		<PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvVer)" />

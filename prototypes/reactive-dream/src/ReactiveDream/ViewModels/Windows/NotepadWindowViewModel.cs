@@ -14,6 +14,15 @@ namespace ReactiveDream.ViewModels
         }
 
 
+        
+        bool _showStatusBar = true;
+        public bool ShowStatusBar
+        {
+            get => _showStatusBar;
+            set => RASIC(ref _showStatusBar, value);
+        }
+
+
         public NotepadWindowViewModel()
             : base()
         {

@@ -2,6 +2,7 @@ using System;
 using System.Timers;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Embedding.Offscreen;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Layout;
@@ -185,6 +186,8 @@ namespace ReactiveDream.Controls
             get => GetValue(TransformAngleXProperty);
             set => SetValue(TransformAngleXProperty, value);
         }
+
+
         public static readonly StyledProperty<double> TransformAngleYProperty =
             AvaloniaProperty.Register<MWindowBase, double>(nameof(TransformAngleY), 0);
         public double TransformAngleY
@@ -193,12 +196,43 @@ namespace ReactiveDream.Controls
             set => SetValue(TransformAngleYProperty, value);
         }
 
+
         public static readonly StyledProperty<double> TransformAngleZProperty =
             AvaloniaProperty.Register<MWindowBase, double>(nameof(TransformAngleZ), 0);
         public double TransformAngleZ
         {
             get => GetValue(TransformAngleZProperty);
             set => SetValue(TransformAngleZProperty, value);
+        }
+
+
+        public static readonly DirectProperty<MWindowBase, Rect> WinBoundsProperty =
+            AvaloniaProperty.RegisterDirect<MWindowBase, Rect>(nameof(Bounds), o => o.WinBounds, (o, v) => o.WinBounds = v);
+        public Rect WinBounds
+        {
+            get => new(Left, Top, WinWidth, WinHeight);
+            set
+            {
+                Left = value.Left;
+                Top = value.Top;
+                WinWidth = value.Width;
+                WinHeight = value.Height;
+            }
+        }
+
+
+        public string Title
+        {
+            get
+            {
+                var header = Header;
+                if (header == null)
+                    return "{x:Null}";
+                else if (header is string titleText)
+                    return titleText;
+                else
+                    return header.ToString();
+            }
         }
 
 
@@ -263,5 +297,28 @@ namespace ReactiveDream.Controls
 
         protected virtual void Activate()
         {}
+
+
+
+
+        const string _TOSTRING_PREFIX = nameof(MWindow);
+        public string ToString(bool includeTypeName, bool useTypeFullName = false)
+        {
+            string typeName;
+            if (includeTypeName)
+            {
+                Type type = GetType();
+                if (useTypeFullName)
+                    typeName = type.FullName;
+                else
+                    typeName = type.Name;
+            }
+            else
+                typeName = _TOSTRING_PREFIX;
+
+            return $"({typeName} titled '{Title}' at '{WinBounds}')";
+        }
+        public override string ToString()
+            => ToString(true);
     }
 }

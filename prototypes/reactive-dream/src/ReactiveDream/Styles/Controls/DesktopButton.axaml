@@ -1,6 +1,5 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ctl="using:ReactiveDream.Controls">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ControlTheme x:Key="DesktopButton"
                 TargetType="Button"
                 BasedOn="{StaticResource {x:Type Button}}">

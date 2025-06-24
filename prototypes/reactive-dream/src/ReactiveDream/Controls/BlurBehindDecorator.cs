@@ -18,6 +18,7 @@ namespace ReactiveDream.Controls
             set => SetValue(BlurRadiusProperty, value);
         }
 
+
         public static readonly StyledProperty<CornerRadius> CornerRadiusProperty =
             Border.CornerRadiusProperty.AddOwner<BlurBehindDecorator>();
         
@@ -26,6 +27,8 @@ namespace ReactiveDream.Controls
             get => GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
+
+
 
 
         static BlurBehindDecorator()
@@ -43,6 +46,15 @@ namespace ReactiveDream.Controls
         static void BoundsProperty_Changed(BlurBehindDecorator sender, AvaloniaPropertyChangedEventArgs e)
             => sender?.RefreshBlurBounds(e.GetNewValue<Rect>().Size);
 
+
+
+
+        public BlurBehindDecorator()
+            : base()
+        {
+            //Padding
+            
+        }
 
 
         protected override void OnSizeChanged(SizeChangedEventArgs e)

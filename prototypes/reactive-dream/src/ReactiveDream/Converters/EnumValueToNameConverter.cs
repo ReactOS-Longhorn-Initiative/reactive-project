@@ -1,9 +1,8 @@
 using System;
 using System.Globalization;
-using Avalonia;
 using Avalonia.Data.Converters;
 
-namespace ReactiveDream.Controls
+namespace ReactiveDream.Converters
 {
     public class EnumValueToNameConverter
         : IValueConverter
@@ -15,6 +14,9 @@ namespace ReactiveDream.Controls
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return null;
+
             Type enumType = (Type)parameter;
             return Enum.GetName(enumType, value);
         }

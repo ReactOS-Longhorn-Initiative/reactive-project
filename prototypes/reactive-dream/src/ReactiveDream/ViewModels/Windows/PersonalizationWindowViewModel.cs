@@ -125,13 +125,13 @@ namespace ReactiveDream.ViewModels
 
 
 
-        protected override void OnReceivedMainVM()
+        protected override void OnReceivedMainVM(MainViewModel vm)
         {
-            base.OnReceivedMainVM();
-            var mainVM = MainVM;
-            SelectedWallpaper = mainVM.Wallpaper;
-            WallpaperPosition = mainVM.WallpaperPosition;
-            IsCompositionActive = mainVM.IsCompositionActive;
+            base.OnReceivedMainVM(vm);
+            DesktopViewModel desktop = vm.DesktopVM;
+            SelectedWallpaper = desktop.Wallpaper;
+            WallpaperPosition = desktop.WallpaperPosition;
+            IsCompositionActive = vm.IsCompositionActive;
         }
 
 
@@ -160,9 +160,9 @@ namespace ReactiveDream.ViewModels
 
             var selectedWallpaper = SelectedWallpaper;
             if (selectedWallpaper != null)
-                mainVM.Wallpaper = selectedWallpaper;
+                mainVM.DesktopVM.Wallpaper = selectedWallpaper;
 
-            mainVM.WallpaperPosition = WallpaperPosition;
+            mainVM.DesktopVM.WallpaperPosition = WallpaperPosition;
             mainVM.IsCompositionActive = IsCompositionActive;
         }
     }

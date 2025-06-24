@@ -2,6 +2,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="using:ReactiveDream.Styles"
             xmlns:ctl="using:ReactiveDream.Controls"
+            xmlns:cnv="using:ReactiveDream.Converters"
             x:Class="ReactiveDream.Views.PersonalizationWindowView">
     <UserControl.Resources>
         <ItemsPanelTemplate x:Key="WrapPanelItemsPanelTemplate">
@@ -64,8 +65,8 @@
                     Header="Background">
                 <DockPanel>
                     <ComboBox SelectedItem="{Binding WallpaperPosition, Mode=TwoWay}"
-                            ItemsSource="{Binding $self, Converter={x:Static ctl:EnumToIEnumerableConverter.Instance}, ConverterParameter={x:Type ctl:WallpaperImagePosition}, Mode=OneTime}"
-                            DisplayMemberBinding="{Binding Converter={x:Static ctl:EnumValueToNameConverter.Instance}, ConverterParameter={x:Type ctl:WallpaperImagePosition}, Mode=OneWay}"
+                            ItemsSource="{Binding $self, Converter={x:Static cnv:EnumToIEnumerableConverter.Instance}, ConverterParameter={x:Type ctl:WallpaperImagePosition}, Mode=OneTime}"
+                            DisplayMemberBinding="{Binding Converter={x:Static cnv:EnumValueToNameConverter.Instance}, ConverterParameter={x:Type ctl:WallpaperImagePosition}, Mode=OneWay}"
                             DockPanel.Dock="Bottom" />
                     <ListBox x:Name="Wallpapers"
                             ItemsSource="{Binding Wallpapers, Mode=OneWay}"
@@ -92,22 +93,7 @@
             <TabItem Header="Appearance">
                 <Grid Margin="14,12"
                     ColumnDefinitions="Auto,Auto,*"
-                    RowDefinitions="*,Auto,Auto"
-                >
-                <!--
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"
-                                        MinWidth="344" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="3*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="2*"
-                                    MinHeight="191" />
-                    </Grid.RowDefinitions>
-                -->
+                    RowDefinitions="*,Auto,Auto">
                     <ListBox x:Name="VisualStyles"
                             ItemsPanel="{DynamicResource WrapPanelItemsPanelTemplate}"
                             SelectedItem="{Binding ElementName=ReactiveVisualStyleItem, Mode=OneTime}"
@@ -200,23 +186,23 @@
                                     <Grid Margin="8,8,28,28"
                                         ColumnDefinitions="12*,10*,78*,144*,71*,17*,12*"
                                         RowDefinitions="27*,32*,30*,58*,20*,24*,12*">
-                                        <ctl:MWindowBase Header="Inactive Window"
-                                                        Grid.Column="1"
-                                                        Grid.Row="1"
-                                                        Grid.ColumnSpan="4"
-                                                        Grid.RowSpan="3"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Stretch"
-                                                        IsActive="False" />
+                                        <ctl:MWindowPreview Header="Inactive Window"
+                                                            Grid.Column="1"
+                                                            Grid.Row="1"
+                                                            Grid.ColumnSpan="4"
+                                                            Grid.RowSpan="3"
+                                                            HorizontalAlignment="Stretch"
+                                                            VerticalAlignment="Stretch"
+                                                            IsActive="False" />
 
-                                        <ctl:MWindowBase Header="Active Window"
-                                                        Grid.Column="2"
-                                                        Grid.Row="2"
-                                                        Grid.ColumnSpan="4"
-                                                        Grid.RowSpan="3"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Stretch"
-                                                        IsActive="True">
+                                        <ctl:MWindowPreview Header="Active Window"
+                                                            Grid.Column="2"
+                                                            Grid.Row="2"
+                                                            Grid.ColumnSpan="4"
+                                                            Grid.RowSpan="3"
+                                                            HorizontalAlignment="Stretch"
+                                                            VerticalAlignment="Stretch"
+                                                            IsActive="True">
                                             <DockPanel>
                                                 <ScrollBar Orientation="Vertical"
                                                         DockPanel.Dock="Right"
@@ -225,23 +211,23 @@
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Top" />
                                             </DockPanel>
-                                        </ctl:MWindowBase>
+                                        </ctl:MWindowPreview>
 
-                                        <ctl:MWindowBase Header="Message Box"
-                                                        Grid.Column="3"
-                                                        Grid.Row="3"
-                                                        Width="144"
-                                                        Height="72"
-                                                        Margin="-72,-47,-72,-25"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        IsActive="True"
-                                                        CanResize="False">
+                                        <ctl:MWindowPreview Header="Message Box"
+                                                            Grid.Column="3"
+                                                            Grid.Row="3"
+                                                            Width="144"
+                                                            Height="72"
+                                                            Margin="-72,-47,-72,-25"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            IsActive="True"
+                                                            CanResize="False">
                                             <Button Content="OK"
                                                     MinWidth="80"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center" />
-                                        </ctl:MWindowBase>
+                                        </ctl:MWindowPreview>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

@@ -5,7 +5,7 @@ using Avalonia;
 namespace ReactiveDream.ViewModels
 {
     public abstract class WindowViewModelBase
-        : ViewModelBase
+        : SubViewModelBase
     {
         string _title = string.Empty;
         public string Title
@@ -14,14 +14,6 @@ namespace ReactiveDream.ViewModels
             set => RASIC(ref _title, value);
         }
 
-        /*
-        object _content = null;
-        public object Content
-        {
-            get => _content;
-            set => RASIC(ref _content, value);
-        }
-        */
 
         bool _isOpened = false;
         public bool IsOpened
@@ -46,12 +38,14 @@ namespace ReactiveDream.ViewModels
             set => RASIC(ref _x, value);
         }
 
+
         double _y = 0;
         public double Y
         {
             get => _y;
             set => RASIC(ref _y, value);
         }
+
 
         double _width = 0;
         public double Width
@@ -60,6 +54,7 @@ namespace ReactiveDream.ViewModels
             set => RASIC(ref _width, value);
         }
 
+
         double _height = 0;
         public double Height
         {
@@ -67,12 +62,29 @@ namespace ReactiveDream.ViewModels
             set => RASIC(ref _height, value);
         }
 
+
+        public Rect Bounds
+        {
+            get => new(X, Y, Width, Height);
+            set
+            {
+                Rect _ = Bounds;
+                X = value.Left;
+                Y = value.Top;
+                Width = value.Width;
+                Height = value.Height;
+                RASIC(ref _, value);
+            }
+        }
+
+
         bool _isMaximized = false;
         public bool IsMaximized
         {
             get => _isMaximized;
             set => RASIC(ref _isMaximized, value);
         }
+
 
         bool _isActive = false;
         public bool IsActive
@@ -82,14 +94,6 @@ namespace ReactiveDream.ViewModels
         }
 
 
-        WeakReference<MainViewModel> _mainVM;
-        protected MainViewModel MainVM
-        {
-            get => _mainVM.TryGetTarget(out MainViewModel mainVM)
-                ? mainVM
-                : null
-            ;
-        }
 
 
         public WindowViewModelBase()
@@ -102,16 +106,6 @@ namespace ReactiveDream.ViewModels
             Width = defaultBounds.Width;
             Height = defaultBounds.Height;
         }
-
-
-        public TWindowVM WithMainVM<TWindowVM>(MainViewModel vm)
-        {
-            _mainVM ??= new(vm);
-            OnReceivedMainVM();
-            return (TWindowVM)(object)this;
-        }
-        protected virtual void OnReceivedMainVM()
-        {}
 
 
         public void SetBoundsFromAxes(WindowBoundsAxis xAxis, WindowBoundsAxis yAxis)
@@ -142,5 +136,21 @@ namespace ReactiveDream.ViewModels
 
         public event EventHandler<EventArgs> WindowClosing;
         public static event EventHandler<WindowActionEventArgs> WindowActivated;
+
+
+
+
+
+        public string ToString(bool useTypeFullName)
+        {
+            Type type = GetType();
+            string typeName = useTypeFullName
+                ? type.FullName
+                : type.Name
+            ;
+            return $"({typeName} titled '{Title}' at '{Bounds}')";
+        }
+        public override string ToString()
+            => ToString(false);
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Avalonia;
-using WallpaperImagePosition = ReactiveDream.Controls.WallpaperImagePosition;
+
 using MWindow = ReactiveDream.Controls.MWindow;
 
 namespace ReactiveDream.ViewModels
@@ -20,21 +20,20 @@ namespace ReactiveDream.ViewModels
         }
 
 
-        WallpaperViewModel _wallpaper = PersonalizationWindowViewModel.WALLPAPERS.Last();
-        public WallpaperViewModel Wallpaper
+        DesktopViewModel _desktopVM = null;
+        public DesktopViewModel DesktopVM
         {
-            get => _wallpaper;
-            set => RASIC(ref _wallpaper, value);
-        }
+            /*
+            get
+            {
+                if (_desktopVM == null)
+                    _desktopVM = new(this);
 
-
-
-
-        WallpaperImagePosition _wallpaperPosition = WallpaperImagePosition.Fill;
-        public WallpaperImagePosition WallpaperPosition
-        {
-            get => _wallpaperPosition;
-            set => RASIC(ref _wallpaperPosition, value);
+                return _desktopVM;
+            }
+            */
+            get => _desktopVM;
+            private set => RASIC(ref _desktopVM, value);
         }
 
 
@@ -60,6 +59,7 @@ namespace ReactiveDream.ViewModels
             get => _windows;
         }
 
+
         public WindowViewModelBase ActiveWindow
         {
             get => Windows.FirstOrDefault(x => x.IsActive);
@@ -82,114 +82,10 @@ namespace ReactiveDream.ViewModels
             }
         }
 
-        
-        readonly ObservableCollection<DesktopIconViewModel> _desktopIcons = new();
-        public ObservableCollection<DesktopIconViewModel> DesktopIcons
-        {
-            get => _desktopIcons;
-        }
 
-        double _desktopIconSize = 32;
-        public double DesktopIconSize
-        {
-            get => _desktopIconSize;
-            set => RASIC(ref _desktopIconSize, value);
-        }
-
-
-        const string _DWM_CONTROL = "mock DWM";
-        static readonly string _DWM_ENABLE = $"Enable {_DWM_CONTROL}";
-        static readonly string _DWM_DISABLE = $"Disable {_DWM_CONTROL}";
-
-
-        const string _FULLSCREEN_CONTROL = "Fullscreen";
-        static readonly string _FULLSCREEN_ENABLE = $"Enter {_FULLSCREEN_CONTROL}";
-        static readonly string _FULLSCREEN_DISABLE = $"Exit {_FULLSCREEN_CONTROL}";
-
-
-        bool _hasSetFullScreenCapability = false;
-        bool _isFullScreenEnabled = false;
-        public void SetFullScreenCapability(bool enable)
-        {
-            _isFullScreenEnabled = enable;
-            if (!_hasSetFullScreenCapability)
-            {
-                _hasSetFullScreenCapability = true;
-
-                if (_isFullScreenEnabled)
-                    IsFullScreen = true;
-            }
-
-
-            if (!_hasDesktopIcons)
-                return;
-
-            
-            bool wasFullScreenEnabled = _desktopIcons.Contains(_toggleFullscreenIcon);
-            if (_isFullScreenEnabled == wasFullScreenEnabled)
-                return;
-
-            else if (_isFullScreenEnabled)
-                _desktopIcons.Insert(0, _toggleFullscreenIcon);
-            else
-                _desktopIcons.Remove(_toggleFullscreenIcon);
-
-            UpdateFullScreenIconName();
-        }
-
-
-        bool _hasDesktopIcons = false;
-        DesktopIconViewModel _toggleFullscreenIcon = null;
         public MainViewModel()
         {
-            _toggleFullscreenIcon = new()
-            {
-                Name = _FULLSCREEN_DISABLE,
-                Command = () =>
-                {
-                    bool enable = !IsFullScreen;
-                    IsFullScreen = enable;
-                    UpdateFullScreenIconName();
-                },
-            };
-
-
-
-            _desktopIcons = new()
-            {
-                new("Personalization")
-                {
-                    Command = () => AddWindow<PersonalizationWindowViewModel>(),
-                },
-                new("Notepad")
-                {
-                    Command = () => AddWindow<NotepadWindowViewModel>(),
-                },
-                new("Run...")
-                {
-                    Command = () => AddWindow<RunWindowViewModel>(),
-                },
-                /*
-                new("Internet Browser")
-                {
-                    Command = () => AddWindow("Wine Internet Explorer"),
-                },
-                CreateIconForOpenDummyWindow("My Computer"),
-                CreateIconForOpenDummyWindow("My Documents"),
-                CreateIconForOpenDummyWindow("My Network Places"),
-                CreateIconForOpenDummyWindow("Recycle Bin"),
-                CreateIconForOpenDummyWindow("Applications Manager"),
-                CreateIconForOpenDummyWindow("Command Prompt"),
-                CreateIconForOpenDummyWindow("Read Me"),
-                */
-            };
-            if (_isFullScreenEnabled)
-            {
-                _desktopIcons.Insert(0, _toggleFullscreenIcon);
-                UpdateFullScreenIconName();
-            }
-
-            _hasDesktopIcons = true;
+            DesktopVM = new DesktopViewModel().WithMainVM(this);
 
 
             MWindow.WindowClosed += MWindow_WindowClosed; //HACK: NOOOOOOOOOOOOOOO
@@ -206,11 +102,22 @@ namespace ReactiveDream.ViewModels
 
             WindowViewModelBase.WindowActivated += (s, e) => ActiveWindow = e.WindowVM;
         }
-        void UpdateFullScreenIconName()
-            => _toggleFullscreenIcon.Name = IsFullScreen
-                ? _FULLSCREEN_DISABLE
-                : _FULLSCREEN_ENABLE
-            ;
+
+
+        
+
+
+        public void SetFullScreenCapability(bool enable)
+        {
+            bool switchToFullscreen = IsFullScreen;
+            DesktopVM.SetFullScreenCapability(enable, ref switchToFullscreen);
+
+            if (switchToFullscreen)
+                IsFullScreen = true;
+        }
+
+
+
 
         void MWindow_WindowClosed(object sender, EventArgs e)
         {
@@ -222,6 +129,7 @@ namespace ReactiveDream.ViewModels
 
             bool wasActive = winVM.IsActive || (ActiveWindow == winVM);
 
+            Console.WriteLine($"{nameof(Windows)}.{nameof(Windows.Remove)}({winVM});");
             Windows.Remove(winVM);
 
             if (wasActive)
@@ -249,7 +157,7 @@ namespace ReactiveDream.ViewModels
         }
 
 
-        void AddWindow<TWindowVM>(string title = null
+        public void AddWindow<TWindowVM>(string title = null
         , double x = double.NaN, double y = double.NaN, double width = double.NaN, double height = double.NaN
         )
             where TWindowVM : WindowViewModelBase, new()

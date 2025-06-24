@@ -16,6 +16,10 @@
                 <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/Button.axaml" />
                 <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/HeaderedContentControl.axaml" />
                 <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/Menu.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/MenuItem.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/ComboBox.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/ContextMenu.axaml" />
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/Separator.axaml" />
                 <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/TabControl.axaml" />
                 <ResourceInclude Source="avares://ReactiveDream/Styles/Controls/TabItem.axaml" />
 

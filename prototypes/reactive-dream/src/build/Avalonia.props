@@ -1,9 +1,8 @@
 <Project>
 	<PropertyGroup>
-		<AvVer>11.0.5</AvVer>
+		<AvVer>11.1.0</AvVer>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="$(AvVer)" />
-		<PackageReference Include="Avalonia.Skia" Version="$(AvVer)" />
 	</ItemGroup>
 </Project>

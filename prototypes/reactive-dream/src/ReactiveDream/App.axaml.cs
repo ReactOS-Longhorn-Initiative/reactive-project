@@ -11,7 +11,8 @@ using ReactiveDream.Views;
 
 namespace ReactiveDream
 {
-    public partial class App : Application
+    public partial class App
+        : Application
     {
         public override void Initialize()
         {
@@ -53,12 +54,12 @@ namespace ReactiveDream
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                MainVM.SetFullScreenCapability(true);
                 desktop.MainWindow = new MainWindow()
                 {
                     Content = MainView,
                     [!DataContextProperty] = MainView[!DataContextProperty]
                 };
+                MainVM.SetFullScreenCapability(true);
             }
 			else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewLifetime)
 			{
@@ -68,6 +69,7 @@ namespace ReactiveDream
 
             base.OnFrameworkInitializationCompleted();
         }
+
 
         void MainVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

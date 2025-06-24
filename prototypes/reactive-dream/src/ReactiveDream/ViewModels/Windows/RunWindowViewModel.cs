@@ -15,6 +15,6 @@ namespace ReactiveDream.ViewModels
 
 
         protected override Rect CreateDefaultBounds()
-            => new(16, -166, 341, 154);
+            => new(16, -186, 341, 154);
     }
 }
