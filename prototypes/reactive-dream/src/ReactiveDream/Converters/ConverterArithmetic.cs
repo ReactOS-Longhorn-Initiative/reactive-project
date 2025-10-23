@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ReactiveDream.Converters
 {
@@ -20,7 +21,7 @@ namespace ReactiveDream.Converters
         static ConverterArithmetic()
         {
             Dictionary<char, ConverterArithmeticOperator> charToConverterArithmeticOperatorMap = new();
-            ConverterArithmeticOperator[] operatorValues = Enum.GetValues<ConverterArithmeticOperator>();
+            var operatorValues = Enum.GetValues(typeof(ConverterArithmeticOperator)).Cast<ConverterArithmeticOperator>();
             foreach (ConverterArithmeticOperator op in operatorValues)
             {
                 char key = (char)op;

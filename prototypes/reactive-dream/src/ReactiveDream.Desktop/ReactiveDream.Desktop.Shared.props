@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../build/Avalonia.props" />
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
 		<OutputType>WinExe</OutputType>
 		<Nullable>disable</Nullable>
 		<AssemblyName>ReactiveDreamDemo</AssemblyName>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="../ReactiveDream/ReactiveDream.net5-0.csproj" />
+		<ProjectReference Include="../ReactiveDream/ReactiveDream.csproj" />
 
 		<PackageReference Include="Avalonia.Desktop" Version="$(AvVer)" />
 	</ItemGroup>

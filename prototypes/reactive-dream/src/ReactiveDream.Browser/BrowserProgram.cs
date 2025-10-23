@@ -15,6 +15,6 @@ namespace ReactiveDream.Browser
             ;
 
         public static AppBuilder BuildAvaloniaApp()
-            => AppConstruction.BuildAppShared<App>();
+            => AppConstruction.BuildAppShared<App>(RuntimePlatformType.Browser);
     }
 }

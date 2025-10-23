@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../build/Avalonia.props" />
 	<PropertyGroup>
-		<AssemblyName>ReactiveDream</AssemblyName>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<OutputType>Library</OutputType>
 		<Nullable>disable</Nullable>
 		<RosDir>../../reactos</RosDir>
 		<!--

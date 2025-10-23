@@ -14,6 +14,7 @@ namespace ReactiveDream.Converters
 
 
         const char _SEPARATOR = ';';
+        static readonly string _SEPARATOR_STR = _SEPARATOR.ToString();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Console.WriteLine($"{nameof(ThicknessArithmeticConverter)}.{nameof(Convert)}('{value}', {nameof(targetType)}, '{parameter}', {nameof(culture)})");
@@ -30,7 +31,7 @@ namespace ReactiveDream.Converters
                 goto fail;
 
 
-            if (paramStr.Contains(_SEPARATOR))
+            if (paramStr.Contains(_SEPARATOR_STR))
             {
                 double bL, bT, bR, bB;
                 ConverterArithmeticOperator opL, opT, opR, opB;

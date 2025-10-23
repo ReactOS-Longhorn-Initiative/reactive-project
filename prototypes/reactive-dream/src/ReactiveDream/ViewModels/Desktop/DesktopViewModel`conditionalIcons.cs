@@ -43,7 +43,7 @@ namespace ReactiveDream.ViewModels
             {
                 Command = () => System.Diagnostics.Process.GetCurrentProcess().Kill(),
             };
-            _exitIconInfo = new(_exitIcon, () => !OperatingSystem.IsBrowser());
+            _exitIconInfo = new(_exitIcon, () => RuntimeHelper.IsDesktop);
             _conditionalDesktopIcons.Add(_exitIconInfo);
 
 

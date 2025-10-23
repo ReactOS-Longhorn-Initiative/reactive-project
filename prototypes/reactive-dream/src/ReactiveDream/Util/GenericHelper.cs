@@ -25,7 +25,7 @@ namespace ReactiveDream
 
 
         public static bool TryGetEnum<TEnum>(object o, out TEnum value)
-            where TEnum : Enum, IConvertible
+            where TEnum : struct, Enum, IConvertible
         {
             if (o == null)
                 goto fail;
@@ -37,7 +37,7 @@ namespace ReactiveDream
 
             
             Type tEnumType = typeof(TEnum);
-            if ((o is string str) && (!string.IsNullOrWhiteSpace(str)) && Enum.TryParse(tEnumType, str, out object vObj) && (vObj is TEnum val1))
+            if ((o is string str) && (!string.IsNullOrWhiteSpace(str)) && Enum.TryParse(str, out TEnum val1))
             {
                 value = val1;
                 return true;

@@ -14,6 +14,7 @@ namespace ReactiveDream.Converters
 
 
         const char _SEPARATOR = ';';
+        static readonly string _SEPARATOR_STR = _SEPARATOR.ToString();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is CornerRadius a))
@@ -23,7 +24,7 @@ namespace ReactiveDream.Converters
                 goto fail;
 
 
-            if (paramStr.Contains(_SEPARATOR))
+            if (paramStr.Contains(_SEPARATOR_STR))
             {
                 double bTL, bTR, bBR, bBL;
                 ConverterArithmeticOperator opTL, opTR, opBR, opBL;

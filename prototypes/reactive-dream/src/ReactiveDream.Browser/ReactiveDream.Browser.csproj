@@ -17,6 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="../ReactiveDream/ReactiveDream.net8-0.csproj" />
+		<ProjectReference Include="../ReactiveDream/ReactiveDream.csproj" />
 	</ItemGroup>
 </Project>

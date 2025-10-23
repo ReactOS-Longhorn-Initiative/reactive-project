@@ -26,12 +26,12 @@ namespace ReactiveDream
 
 
             double addWindowParamPos = addWindowParams.Position;
-            if (double.IsNormal(addWindowParamPos) && (addWindowParamPos >= 0))
+            if (IsDoubleSane(addWindowParamPos) && (addWindowParamPos >= 0))
                 retPos = addWindowParamPos;
 
 
             double addWindowParamSize = addWindowParams.Size;
-            if (double.IsNormal(addWindowParamSize) && (addWindowParamSize > 0))
+            if (IsDoubleSane(addWindowParamSize) && (addWindowParamSize > 0))
                 retSize = addWindowParamSize;
 
 
@@ -40,6 +40,17 @@ namespace ReactiveDream
 
 
             return new(retPos, retSize);
+        }
+
+
+        static bool IsDoubleSane(double d)
+        {
+            if (double.IsNaN(d))
+                return false;
+            else if (double.IsInfinity(d))
+                return false;
+            else
+                return true;
         }
     }
 }

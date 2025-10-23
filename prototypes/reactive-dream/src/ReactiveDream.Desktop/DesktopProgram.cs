@@ -17,7 +17,7 @@ namespace ReactiveDream.Desktop
 
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp()
-            => AppConstruction.BuildAppShared<App>()
+            => AppConstruction.BuildAppShared<App>(RuntimePlatformType.Desktop)
                 .UsePlatformDetect()
                 .With(new Win32PlatformOptions()
                 {

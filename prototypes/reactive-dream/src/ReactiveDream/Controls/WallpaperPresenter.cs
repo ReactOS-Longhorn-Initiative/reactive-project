@@ -127,8 +127,8 @@ namespace ReactiveDream.Controls
             double imgHeight = imgSize.Height;
             Rect src = new(0, 0, imgWidth, imgHeight);
 
-            double xTileCount = Math.Round(rgnSize.Width / imgWidth, MidpointRounding.ToPositiveInfinity);
-            double yTileCount = Math.Round(rgnSize.Height / imgHeight, MidpointRounding.ToPositiveInfinity);
+            double xTileCount = Math.Round(rgnSize.Width / imgWidth, MidpointRounding.AwayFromZero);
+            double yTileCount = Math.Round(rgnSize.Height / imgHeight, MidpointRounding.AwayFromZero);
 
             for (double y = 0; y < yTileCount; y++)
             {
