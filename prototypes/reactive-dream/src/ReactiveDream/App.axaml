@@ -14,31 +14,10 @@
     </Application.Styles>
             
     <Application.Resources>
-        <ControlTheme x:Key="Placeholder"
-                    TargetType="{x:Type ContentControl}">
-            <Setter Property="Content" Value="PLACEHOLDER" />
-            <Setter Property="FontSize" Value="9" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <Border Background="#FF000000">
-                            <ContentPresenter x:Name="PART_ContentPresenter"
-                                            Foreground="#FFFFFFFF"
-                                            TextWrapping="Wrap"
-                                            Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            BorderThickness="0"
-                                            CornerRadius="0"
-                                            Padding="{TemplateBinding Padding}"
-                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Border>
-                </ControlTemplate>
-            </Setter>
-        </ControlTheme>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://ReactiveDream/Styles/Shared/Controls.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

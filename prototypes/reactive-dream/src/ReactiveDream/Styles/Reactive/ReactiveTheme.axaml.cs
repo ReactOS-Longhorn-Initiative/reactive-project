@@ -45,7 +45,7 @@ namespace ReactiveDream.Styles
             AvaloniaXamlLoader.Load(this);
             ResourceInclude dwmInclude = new(baseUri: null)
             {
-                Source = new("avares://ReactiveDream/Styles/DWMResources.axaml")
+                Source = new("avares://ReactiveDream/Styles/Reactive/DWMResources.axaml")
             };
 
 
