@@ -1,0 +1,79 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build_desktop_net8",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/ReactiveDream.Desktop/ReactiveDream.Desktop.net8-0.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+        {
+            "label": "publish_desktop_net8",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/ReactiveDream.Desktop/ReactiveDream.Desktop.net8-0.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+        {
+            "label": "watch_desktop_net8",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/ReactiveDream.Desktop/ReactiveDream.Desktop.net8-0.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+
+
+        {
+            "label": "build_browser_net8",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/ReactiveDream.Browser/ReactiveDream.Browser.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+        {
+            "label": "publish_browser_net8",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/ReactiveDream.Browser/ReactiveDream.Browser.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+        {
+            "label": "watch_browser_net8",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/ReactiveDream.Browser/ReactiveDream.Browser.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+    ]
+}
